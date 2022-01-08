@@ -57,6 +57,7 @@ app.get('/readlist',function(req,res){
 // POST Requests 
 app.post('/register', function(req,res){
   var userObj = req.body;
+  userObj.books= [];
   //  Checking on empty entries
   if(!userObj.username || !userObj.password){
       console.log("Username/Password cannot be empty!");
@@ -83,7 +84,8 @@ app.post('/register', function(req,res){
               fs.writeFile('users.json', JSON.stringify(existingUsers), 'utf-8', function(err) {
                   if (err) throw err
                   console.log('Done!');
-                  return res.redirect('/');
+
+                  return res.redirect('/home');
               });
           }     
       });
@@ -100,8 +102,10 @@ app.post('/login',function(req,res){
   else{
       //  Reading from the JSON DB
       fs.readFile('users.json', 'utf-8', function(err, data) { 
+
         if (err) throw err;
         var existingUsers = JSON.parse(data);
+
         //  Check if the username  exists
         var nameFlag = false; 
         for (let users of existingUsers.users) {
@@ -135,7 +139,26 @@ app.post('/login',function(req,res){
 });
 
 app.post('/search', function(req,res){
-  res.render('searchresults');
+  var userSearch =req.body.Search;
+  fs.readFile('books.json', 'utf-8', function(err, data) { 
+    if (err) throw err;
+    var existingBooks = JSON.parse(data);
+    var resultBooks = [];
+    for (let book of existingBooks.books) {
+      let name =JSON.stringify(book.name);
+      if (name.toLowerCase().includes(userSearch.toLowerCase())){
+         resultBooks.push(book);
+      }
+    }  
+    if(resultBooks.length == 0){
+      res.render('searchresults',{title: `${resultBooks.length} Books found`,result: []});
+    }
+    else{
+
+      res.render('searchresults',{title: `${resultBooks.length} Books found`,result: resultBooks});
+    }
+  });     
+  
 });
 
 app.listen(port, function() {
