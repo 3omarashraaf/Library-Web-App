@@ -138,9 +138,6 @@ app.post('/search', function(req,res){
   res.render('searchresults');
 });
 
-
-
-
 app.listen(port, function() {
   console.log('Server running at http://localhost:' + port + '/');
 });
