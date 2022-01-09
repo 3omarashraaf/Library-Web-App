@@ -33,6 +33,7 @@ app.use(session({
 }))
 
 const redirectLogin = (req, res, next) =>{
+  console.log(req.session.userId)
   if (!req.session.userId){
       res.redirect('/')
   }else{
