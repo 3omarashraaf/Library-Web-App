@@ -76,6 +76,7 @@ app.get('/registration', redirectHome,(req,res) => {
   res.render('registration');
 });
 app.get('/home',(req,res) => {
+  console.log(req.session.userId)
   res.render('home');
 });
 app.get('/novel', redirectLogin,(req,res) => {
