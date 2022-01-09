@@ -33,7 +33,6 @@ app.use(session({
 }))
 
 const redirectLogin = (req, res, next) =>{
-  console.log(req.session.userId)
   if (!req.session.userId){
       res.redirect('/')
   }else{
@@ -80,7 +79,6 @@ app.get('/home',(req,res) => {
   res.render('home');
 });
 app.get('/novel', redirectLogin,(req,res) => {
-  console.log(req.session.userId)
   res.render('novel');
 });
 app.get('/flies', redirectLogin,(req,res) => {
@@ -154,7 +152,7 @@ app.post('/register', redirectHome, (req,res)=>{
   }  
 
 })
-app.post('/login', redirectHome, (req,res)=>{
+app.post('/login', (req,res)=>{
   const {username,password} = req.body
   if (username&&password){
     fs.readFile('users.json', 'utf-8', function(err, data) { 
@@ -166,7 +164,6 @@ app.post('/login', redirectHome, (req,res)=>{
         )  
         if (user){
           req.session.userId = user.id
-          console.log(req.session)
           res.redirect('/home')
         } 
         else{
