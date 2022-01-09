@@ -67,7 +67,10 @@
             <form method="POST" action='/search' class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" name="Search" type="search" placeholder="Search"
                     aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <button class="btn btn-success" type="submit">Search</button>
+            </form>
+            <form method= 'post' action = '/logout'>
+                <button style = " margin-left: 10px;" class="btn btn-danger">Logout</button>
             </form>
         </div>
     </nav>
@@ -78,7 +81,9 @@
         A poetry collection by American poet Walt Whitman (1819–1892), each poem of which is loosely connected and represents the celebration of his philosophy of life and humanity.
     </div>
     <div class="readlist">
-        <button id="readlist" class="btn btn-secondary ml-3">Add to Want to Read List</button>
+        <form method="POST" action='/addToList'>
+            <button type="submit" name="Name" value="Leaves of Grass" id="readlist"  class="btn btn-secondary ml-3">Add to Want to Read List</button>
+        </form>
     </div>
     <div class="video">
         <video width="480" height="360" controls>

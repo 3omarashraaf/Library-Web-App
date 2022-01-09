@@ -13,10 +13,6 @@ var {
     SESS_LIFETIME = TWO_HOURS
 } = process.env
 var IN_PROD = NODE_ENV === 'production'
-// var users = [
-//     { id: 1, username: '3omarashraaf', password:  '12345678',books: []},
-//     { id: 1, username: 'ibraaa33', password:  '12345678',books: []}
-// ]
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -39,7 +35,7 @@ app.use(session({
 
 const redirectLogin = (req, res, next) =>{
   if (!req.session.userId){
-      res.redirect('/login')
+      res.redirect('/')
   }else{
       next()
   }
@@ -71,19 +67,8 @@ app.use((req, res, next) => {
 // GET Requests 
 app.get('/', (req, res) => {
   const {userId} = req.session
-  res.send(`
-    <h1>WELCOME!</h1>
-    ${userId ? `
-    <a href = "home">Home</a>
-    <form method= 'post' action = '/logout'>
-        <button>Logout</button>
-    </form>
-    ` : `
-  <a href = "login">Login</a>
-  <a href = "registration">Register</a>
-  `}
-  `)
-})
+  res.render('start', {uid: userId})
+});
 app.get('/login', redirectHome,(req,res) => {
   res.render('login');
 });
@@ -91,8 +76,6 @@ app.get('/registration', redirectHome,(req,res) => {
   res.render('registration');
 });
 app.get('/home', redirectLogin,(req,res) => {
-  const {userId} = req.session
-  console.log(userId);
   res.render('home');
 });
 app.get('/novel', redirectLogin,(req,res) => {
@@ -123,18 +106,28 @@ app.get('/mockingbird', redirectLogin,(req,res) => {
   res.render('mockingbird');
 });
 app.get('/readlist', redirectLogin,(req,res) => {
-  res.render('readlist');
+  const {userId} = req.session
+  fs.readFile('users.json', 'utf-8', function(err, data) { 
+    if (err) throw err;
+    var existingUsers = JSON.parse(data);
+    var users = existingUsers
+    const user = users.find(
+      user => user.id === userId
+    )
+    res.render('readlist',{title: `${user.books.length} Books found`,result: user.books});
+  })
 });
-
+app.get('*', function(req, res){
+  res.send('404 : Not Found');
+});
 // POST Requests 
-
 app.post('/register', redirectHome, (req,res)=>{
   const {username,password} = req.body
   if (username&&password){
     fs.readFile('users.json', 'utf-8', function(err, data) { 
       if (err) throw err;
       var existingUsers = JSON.parse(data);
-      var users = existingUsers
+      var users = existingUsers;
       const exists = users.some(
         user => user.username === username
       )
@@ -150,15 +143,15 @@ app.post('/register', redirectHome, (req,res)=>{
           if (err) throw err
         });
         req.session.userId = user2.id;
-        res.redirect('/home')
+        res.redirect('/home');
       }else{
-        res.redirect('/registration')
+        res.redirect('/registration?error=' + encodeURIComponent('Username_already_exists'));
+
       }
     })
   }  
 
 })
-
 app.post('/login', redirectHome, (req,res)=>{
   const {username,password} = req.body
   if (username&&password){
@@ -174,12 +167,11 @@ app.post('/login', redirectHome, (req,res)=>{
           res.redirect('/home')
         } 
         else{
-          res.redirect('/login')
+          res.redirect('/login?error=' + encodeURIComponent('Incorrect_Credential'));
         }
     }) 
   } 
 })
-
 app.post('/search', redirectLogin, (req,res) => {
   var userSearch =req.body.Search;
   fs.readFile('books.json', 'utf-8', function(err, data) { 
@@ -202,17 +194,49 @@ app.post('/search', redirectLogin, (req,res) => {
   });     
   
 });
-
 app.post('/logout', redirectLogin, (req,res) => {
   req.session.destroy(err => {
     if(err){
-      return res.redirect('/')
+      res.redirect('/home')
     }
-
     res.clearCookie(SESS_NAME)
-    return res.redirect('/login')
+    res.redirect('/')
   })
 });
+app.post('/addToList', redirectLogin, (req,res) => { 
+  var {userId} = req.session
+  var name = req.body.Name;
+  fs.readFile('users.json', 'utf-8', function(err, data) { 
+    if (err) throw err;
+    var existingUsers = JSON.parse(data);
+    var users = existingUsers
+    const user = users.find(
+      user => user.id === userId
+    )
+    const exists = user.books.some(
+      book => book.name === name
+    )
+    if (!exists){
+      fs.readFile('books.json', 'utf-8', function(err, data) { 
+        if (err) throw err;
+        var existingBooks = JSON.parse(data);
+        var books = existingBooks.books;
+        const book = books.find(
+          book => book.name === name
+        )
+        user.books.push(book); 
+        fs.writeFile('users.json', JSON.stringify(users), 'utf-8', function(err) {
+          if (err) throw err
+        });
+        res.redirect('/home')
+      });
+    }else{
+      res.redirect('/home?error=' + encodeURIComponent('Book_already_in_your_list'));
+    }
+    });
+  
+})
+
 app.listen(PORT, function() {
   console.log('Server running at http://localhost:' + PORT + '/');
 });

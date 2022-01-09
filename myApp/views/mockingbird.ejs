@@ -66,7 +66,10 @@
             <form method="POST" action='/search' class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" name="Search" type="search" placeholder="Search"
                     aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <button class="btn btn-success" type="submit">Search</button>
+            </form>
+            <form method= 'post' action = '/logout'>
+                <button style = " margin-left: 10px;" class="btn btn-danger">Logout</button>
             </form>
         </div>
     </nav>
@@ -77,7 +80,9 @@
             The unforgettable novel of a childhood in a sleepy Southern town and the crisis of conscience that rocked it, To Kill A Mockingbird became both an instant bestseller and a critical success when it was first published in 1960. It went on to win the Pulitzer Prize in 1961 and was later made into an Academy Award-winning film, also a classic.
     </div>
     <div class="readlist">
-        <button id="readlist" class="btn btn-secondary ml-3">Add to Want to Read List</button>
+        <form method="POST" action='/addToList'>
+            <button type="submit" name="Name" value="To Kill a Mockingbird" id="readlist"  class="btn btn-secondary ml-3">Add to Want to Read List</button>
+        </form>    
     </div>
     <div class="video">
         <video width="480" height="360" controls>

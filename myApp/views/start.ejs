@@ -32,17 +32,21 @@
         <h1>Welcome</h1>
     </div>
     <div class="cont">
-        <form method="POST" action="/login">
-            Username:<br>
-            <input type="text" name="username" required>
-            <br>
-            Password:<br>
-            <input type="password" name="password" required>
-            <br><br>
-            <input type="submit" value="Login">
-        </form>
-        <br>
-        <a href="registration">I dont have an account</a>
+        <% if(uid){ %>
+            <a href="home">
+                <button>Home</button>
+            </a>
+            <form method= 'post' action = '/logout'>
+                <button>Logout</button>
+            </form>
+          <% } else{ %>  
+            <a href="login">
+                <button>Login</button>
+            </a>
+            <a href="registration">
+                <button>Register</button>
+            </a>
+         <% } %>  
     </div>
 </body>
 </html>
