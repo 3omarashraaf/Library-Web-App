@@ -163,6 +163,7 @@ app.post('/login', redirectHome, (req,res)=>{
         )  
         if (user){
           req.session.userId = user.id
+          console.log(req.session.userId)
           res.redirect('/home')
         } 
         else{
