@@ -5,7 +5,6 @@ var session = require('express-session');
 var fs = require('fs');
 var app = express();
 var TWO_HOURS = 1000 * 60 * 60 * 2
-var port = process.env.port || 3000
 var {
     NODE_ENV = 'development',
     SESS_NAME = 'sid',
@@ -236,7 +235,13 @@ app.post('/addToList', redirectLogin, (req,res) => {
     });
   
 })
-
-app.listen(port, function() {
-  console.log('Server running at http://localhost:' + port + '/');
-});
+ if (process.env.PORT){
+    app.listen(process.env.PORT, () => {
+      console.log('Server running at Heroku');
+    });
+ }
+ else{
+    app.listen(3000, () => {
+      console.log('Server running at http://localhost:3000');
+    });
+ }
