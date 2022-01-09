@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.set('trust proxy', 1);
 app.use(session({
   name: SESS_NAME,
   resave: false,
@@ -28,7 +29,7 @@ app.use(session({
   cookie: {
       maxAge: SESS_LIFETIME,
       sameSite: true,
-      secure: IN_PROD
+      secure: true
   }
 }))
 
