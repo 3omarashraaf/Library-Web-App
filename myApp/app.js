@@ -5,8 +5,8 @@ var session = require('express-session');
 var fs = require('fs');
 var app = express();
 var TWO_HOURS = 1000 * 60 * 60 * 2
+var port = process.env.port || 3000
 var {
-    PORT = 3000,
     NODE_ENV = 'development',
     SESS_NAME = 'sid',
     SESS_SECRET = 'gjd;jgaklf;jhg',
@@ -237,6 +237,6 @@ app.post('/addToList', redirectLogin, (req,res) => {
   
 })
 
-app.listen(PORT, function() {
-  console.log('Server running at http://localhost:' + PORT + '/');
+app.listen(port, function() {
+  console.log('Server running at http://localhost:' + port + '/');
 });
