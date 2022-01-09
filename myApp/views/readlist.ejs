@@ -56,7 +56,14 @@
                 <button onclick="location.href = '/<%=result[i].ref%>';" id="flies" class="btn btn-secondary ml-3"> View </button>
             </div>
         <% } %>
+        </div> 
     </div> 
-</div> 
+    <% if (msg === '') { %>
+
+        <% } else { %>
+            <div  style = "width: fit-content; height: fit-content; position: fixed; margin-left: 600px; margin-top: 40px; "class="alert alert-danger" role="alert">
+                <%= msg %>
+            </div>
+        <% } %>
 </body>
 </html>

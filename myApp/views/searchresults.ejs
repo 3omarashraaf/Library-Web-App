@@ -48,7 +48,7 @@
     </nav>
     <h2 style = "margin-right: 50px;"><%= title %></h2> 
     <div style= "display: flex; flex-direction: row; justify-content: center; margin-top: 50px;">
-    <% for(var i=0; i<result.length; i++) {%>
+    <% for(var i=0; i<result.length; i++) { %>
         <div style= " display: flex; flex-direction: column; align-items: center; margin-right: 50px; ">
             <img  id="image" src="/<%=result[i].ref%>.jpg" width="193" height="300">
             <label style="color: aliceblue;" class="ml-4 my-2"><%= result[i].name %></label>

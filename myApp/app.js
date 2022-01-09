@@ -70,10 +70,10 @@ app.get('/', (req, res) => {
   res.render('start', {uid: userId})
 });
 app.get('/login', redirectHome,(req,res) => {
-  res.render('login');
+  res.render('login',{msg :''});
 });
 app.get('/registration', redirectHome,(req,res) => {
-  res.render('registration');
+  res.render('registration', {msg: ''});
 });
 app.get('/home', redirectLogin,(req,res) => {
   res.render('home');
@@ -114,7 +114,7 @@ app.get('/readlist', redirectLogin, (req,res) => {
     const user = users.find(
       user => user.id === userId
     )
-    res.render('readlist',{title: `${user.books.length} Books found`,result: user.books});
+    res.render('readlist',{title: `${user.books.length} Books found`,result: user.books, msg:''});
   })
 });
 app.get('*', function(req, res){
@@ -145,7 +145,7 @@ app.post('/register', redirectHome, (req,res)=>{
         req.session.userId = user2.id;
         res.redirect('/home');
       }else{
-        res.redirect('/registration?error=' + encodeURIComponent('Username_already_exists'));
+        res.render('registration', {msg: 'Username is already used'});
 
       }
     })
@@ -167,7 +167,7 @@ app.post('/login', redirectHome, (req,res)=>{
           res.redirect('/home')
         } 
         else{
-          res.redirect('/login?error=' + encodeURIComponent('Incorrect_Credential'));
+          res.render('login', {msg : 'Incorrect Credential'});
         }
     }) 
   } 
@@ -231,7 +231,7 @@ app.post('/addToList', redirectLogin, (req,res) => {
         res.redirect('/home')
       });
     }else{
-      res.redirect('/home?error=' + encodeURIComponent('Book_already_in_your_list'));
+      res.render('readlist',{title: `${user.books.length} Books found`,result: user.books, msg:'This book already in your list'});
     }
     });
   
