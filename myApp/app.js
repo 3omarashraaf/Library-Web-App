@@ -75,8 +75,7 @@ app.get('/login', redirectHome,(req,res) => {
 app.get('/registration', redirectHome,(req,res) => {
   res.render('registration');
 });
-app.get('/home',(req,res) => {
-  console.log(req.session)
+app.get('/home', redirectLogin,(req,res) => {
   res.render('home');
 });
 app.get('/novel', redirectLogin,(req,res) => {
@@ -106,7 +105,7 @@ app.get('/dune', redirectLogin,(req,res) => {
 app.get('/mockingbird', redirectLogin,(req,res) => {
   res.render('mockingbird');
 });
-app.get('/readlist',(req,res) => {
+app.get('/readlist', redirectLogin, (req,res) => {
   const {userId} = req.session
   fs.readFile('users.json', 'utf-8', function(err, data) { 
     if (err) throw err;
@@ -153,7 +152,7 @@ app.post('/register', redirectHome, (req,res)=>{
   }  
 
 })
-app.post('/login', (req,res)=>{
+app.post('/login', redirectHome, (req,res)=>{
   const {username,password} = req.body
   if (username&&password){
     fs.readFile('users.json', 'utf-8', function(err, data) { 
@@ -237,13 +236,14 @@ app.post('/addToList', redirectLogin, (req,res) => {
     });
   
 })
- if (process.env.PORT){
-    app.listen(process.env.PORT, () => {
-      console.log('Server running at Heroku');
-    });
- }
- else{
-    app.listen(3000, () => {
-      console.log('Server running at http://localhost:3000');
-    });
- }
+ 
+if (process.env.PORT){
+  app.listen(process.env.PORT, () => {
+    console.log('Server running at Heroku');
+  });
+}
+else{
+  app.listen(3000, () => {
+    console.log('Server running at http://localhost:3000');
+  });
+}
