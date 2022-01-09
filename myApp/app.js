@@ -105,7 +105,7 @@ app.get('/dune', redirectLogin,(req,res) => {
 app.get('/mockingbird', redirectLogin,(req,res) => {
   res.render('mockingbird');
 });
-app.get('/readlist', redirectLogin,(req,res) => {
+app.get('/readlist',(req,res) => {
   const {userId} = req.session
   fs.readFile('users.json', 'utf-8', function(err, data) { 
     if (err) throw err;
