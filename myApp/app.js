@@ -74,7 +74,7 @@ app.get('/login', redirectHome,(req,res) => {
 app.get('/registration', redirectHome,(req,res) => {
   res.render('registration');
 });
-app.get('/home', redirectLogin,(req,res) => {
+app.get('/home',(req,res) => {
   res.render('home');
 });
 app.get('/novel', redirectLogin,(req,res) => {
@@ -163,7 +163,6 @@ app.post('/login', redirectHome, (req,res)=>{
         )  
         if (user){
           req.session.userId = user.id
-          console.log(req.session.userId)
           res.redirect('/home')
         } 
         else{
