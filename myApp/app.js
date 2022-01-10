@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-// app.set('trust proxy', 1); //Activate this line to run on heroku
+app.set('trust proxy', 1); //Comment/Uncomment this line to run Locally/On Heroku
 app.use(session({
   name: SESS_NAME,
   resave: false,
@@ -29,7 +29,7 @@ app.use(session({
   cookie: {
       maxAge: SESS_LIFETIME,
       sameSite: true,
-      secure: IN_PROD // 'true' to run on Heroku 'IN_PROD' to run locally
+      secure: true // 'true' to run on Heroku 'IN_PROD' to run locally
   }
 }))
 
