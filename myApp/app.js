@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.set('trust proxy', 1); //Remove this line to run locally 
+// app.set('trust proxy', 1); //Activate this line to run on heroku
 app.use(session({
   name: SESS_NAME,
   resave: false,
@@ -29,7 +29,7 @@ app.use(session({
   cookie: {
       maxAge: SESS_LIFETIME,
       sameSite: true,
-      secure: true //change 'true' to 'IN_PROD' to run locally
+      secure: IN_PROD // 'true' to run on Heroku 'IN_PROD' to run locally
   }
 }))
 
@@ -234,7 +234,7 @@ app.post('/addToList', redirectLogin, (req,res) => {
         fs.writeFile('users.json', JSON.stringify(users), 'utf-8', function(err) {
           if (err) throw err
         });
-        res.redirect('/home')
+        res.redirect('/readlist')
       });
     }else{
       //Sending error msg to frontend if book is already in user's list
@@ -242,7 +242,35 @@ app.post('/addToList', redirectLogin, (req,res) => {
     }
     });
   
-})
+});
+app.post('/removeFromList',  redirectLogin, (req,res) => {
+  // Getting active user's session id
+  var {userId} = req.session
+  //Getting the name of the book to be removed
+  var name = req.body.Name;
+  fs.readFile('users.json', 'utf-8', function(err, data) { 
+    if (err) throw err;
+    var users = JSON.parse(data);
+    for(user of users){
+      if (user.id === userId){
+        var tempArr = [];
+        // loop through the user's books check for books different than the one to be removed
+        for(book of user.books){
+          if(book.name !== name){
+            tempArr.push(book);
+          }
+        } 
+        //changing the array of books 
+        user.books = tempArr;
+      }
+    }
+    //pushing the data back to the JSON file
+    fs.writeFile('users.json', JSON.stringify(users), 'utf-8', function(err) {
+      if (err) throw err
+    });
+    res.redirect('/readlist');
+  });
+});
 app.post('/logout', redirectLogin, (req,res) => {
   req.session.destroy(err => {
     if(err){
@@ -252,6 +280,8 @@ app.post('/logout', redirectLogin, (req,res) => {
     res.redirect('/')
   })
 });
+
+//Starting the server
 if (process.env.PORT){
   app.listen(process.env.PORT, () => {
     console.log('Server running at Heroku');

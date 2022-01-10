@@ -33,19 +33,13 @@
     </div>
     <div class="cont">
         <% if(uid){ %>
-            <a href="home">
-                <button>Home</button>
-            </a>
             <form method= 'post' action = '/logout'>
-                <button>Logout</button>
+                <button style = " margin-left: 10px;" type="button" onclick="location.href = '/home'" class="btn btn-primary">Home</button>
+                <button style = " margin-left: 10px;" class="btn btn-danger">Logout</button>
             </form>
           <% } else{ %>  
-            <a href="login">
-                <button>Login</button>
-            </a>
-            <a href="registration">
-                <button>Register</button>
-            </a>
+            <button style = " margin-left: 10px;" type="button" onclick="location.href = '/login'" class="btn btn-primary">Login</button>
+            <button style = " margin-left: 10px;" type="button" onclick="location.href = '/registration'" class="btn btn-primary">Registration</button>
          <% } %>  
     </div>
 </body>
