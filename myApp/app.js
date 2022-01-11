@@ -149,7 +149,7 @@ app.post('/register', redirectHome, (req,res)=>{
           if (err) throw err
         });
         //Setting up session id to match the userId
-        req.session.userId = user2.id;
+        req.session.userId = newUser.id;
         res.redirect('/home');
       }else{
         //Sending error msg to the frontend if the entered username is already used  
