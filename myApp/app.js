@@ -29,7 +29,7 @@ app.use(session({
   cookie: {
       maxAge: SESS_LIFETIME,
       sameSite: true,
-      secure: true // 'true' to run on Heroku 'IN_PROD' to run locally
+      secure: true// 'true' to run on Heroku 'IN_PROD' to run locally
   }
 }))
 
@@ -203,7 +203,6 @@ app.post('/search', redirectLogin, (req,res) => {
       res.render('searchresults',{title: `${resultBooks.length} Books found`,result: resultBooks});
   });     
 });
-
 app.post('/addToList', redirectLogin, (req,res) => { 
   // Getting active user's session id
   var {userId} = req.session

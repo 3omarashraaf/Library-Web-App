@@ -62,12 +62,12 @@
         <% } %>
         </div> 
     </div> 
-    <% if (msg === '') { %>
+    <% if (msg !== '') { %>
+        <div  style = "width: fit-content; height: fit-content; position: fixed; margin-left: 600px; margin-top: 40px; "class="alert alert-danger" role="alert">
+            <%= msg %>
+        </div>
+    <% } %>
 
-        <% } else { %>
-            <div  style = "width: fit-content; height: fit-content; position: fixed; margin-left: 600px; margin-top: 40px; "class="alert alert-danger" role="alert">
-                <%= msg %>
-            </div>
-        <% } %>
+
 </body>
 </html>
