@@ -1,0 +1,46 @@
+<!-- <div>
+    <h3 class="float-md-left mb-0 text-light">BookShelf</h3>
+    <nav class="nav nav-masthead justify-content-center float-md-right">
+        <a class="nav-link" aria-current="page" href="/">Home</a>
+        <a class="nav-link" href="/Books">Books</a>
+        <%// if(!currentUser) { %>
+        <a class="nav-link" href="/login">Login</a>
+        <a class="nav-link" href="/register">Register</a>
+        <% //} else { %>
+        <a class="nav-link" href="/logout">Logout</a>
+        <% //} %>
+    </nav>
+</div> -->
+
+
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-transparent">
+    <div class="container-fluid">
+      <a class="navbar-brand " href="#"> <h2>BookShelf</h2>  </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="/books">Books</a>
+              </li>
+          <% if(!currentUser)  { %> 
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register">Register</a>
+          </li>
+          <% }else { %> 
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+          <% } %> 
+        </ul>
+      </div>
+    </div>
+  </nav>
