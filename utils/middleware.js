@@ -7,7 +7,6 @@ module.exports.isNotLoggedIn = (req, res, next)=> {
     next();
 }
 
-
 module.exports.isLoggedIn = (req, res, next)=> {
     if(req.session.user_id){
         req.flash('error','You are already logged in')
