@@ -2,10 +2,10 @@
 <div class="d-flex">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <div class="row">
-            <div class="input-group test">
-                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                <button type="button" class="btn btn-outline-primary">search</button>
-            </div>
+            <form class="input-group needs-validation" action="/books/search" method="POST" novalidate>
+                <input type="text" class="form-control rounded" name="searchKey" id="searchKey" placeholder="Search" required>
+                <button type= "submit" class="btn btn-outline-primary">search</button>
+            </form>
         </div>
     </div>
 </div>
