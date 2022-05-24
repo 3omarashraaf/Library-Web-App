@@ -7,12 +7,13 @@ module.exports = async (searchKey) => {
     var books = []
     for (item of response.items) {
         const bookData = item.volumeInfo
-        if(bookData && bookData.title && bookData.description && bookData.authors[0] && 'imageLinks' in bookData ){
+        if(bookData && 'title' in bookData && 'description' in bookData && 'industryIdentifiers' in bookData && 'authors' in bookData && 'imageLinks' in bookData ){
             const book = {
+                id: item.id,
                 title: bookData.title,
                 description: bookData.description,
                 author: bookData.authors[0],
-                // isbn: bookData.industryIdentifiers.filter(element => element.type === 'ISBN_13' )[0].identifier,
+                isbn: bookData.industryIdentifiers.filter(element => element.type === 'ISBN_13' )[0].identifier,
                 imgUrl: bookData.imageLinks.smallThumbnail || bookData.imageLinks.Thumbnail
             }
             books.push(book)

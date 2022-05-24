@@ -1,0 +1,27 @@
+.card-img-top{
+    height: 30vh;
+    object-fit:contain;
+}
+
+.text-truncate-container {
+    width: 100%;
+}
+.text-truncate-container p {
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.test{
+  height: 50vh;
+}
+
+
+@media (max-width: 767px) { 
+  .blah{
+    display: flex;
+   align-items: center;
+   justify-content: center;   
+  }  
+}
+    

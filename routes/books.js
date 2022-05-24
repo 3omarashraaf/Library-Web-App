@@ -2,12 +2,16 @@ const express = require('express');
 const router = express.Router();
 const catchAsync = require('../utils/catchAsync');
 const books = require('../controllers/books');
+const {validateBook} = require('../utils/middleware');
 
-router.post('/')                                                            // Create a book    C
-router.get('/',async (req,res) =>{res.render('books')})                     // Show all books   R             
-router.post('/search',catchAsync(books.search))                             // Search Books 
-router.post('/:id')                                                         // Edit a book      U
-router.delete('/:id')                                                       // Delete a book    D
-router.get('/:id')                                                          // Show one book
+router.get('/',catchAsync(books.showAll))                             // Show all books   R             
+router.get('/new',(req,res) =>{res.render('books/new')})              // Render New Book Form 
+router.post('/', validateBook ,catchAsync(books.newBook))                            // Create a book    C
+router.post('/search',catchAsync(books.search))                       // Search Books 
+router.post('/googleId/:id',catchAsync(books.addOneBook))             // Add book from google
+router.get('/:isbn',catchAsync(books.oneBook))                        // Show one book
+router.get('/:isbn/edit', catchAsync(books.showEditPage))             // Render edit book Form   
+router.put('/:isbn', validateBook, catchAsync(books.editBook))                       // Edit a book      U
+router.delete('/:isbn',catchAsync(books.deleteBook))                  // Delete a book    D
 
 module.exports = router;

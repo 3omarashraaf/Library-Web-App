@@ -5,6 +5,7 @@ const session = require('express-session')
 const engine = require('ejs-mate')
 const flash = require('connect-flash');
 const router = express.Router();
+const methodOverride = require('method-override');
 
 //Require utils
 const { isLoggedIn , isNotLoggedIn} = require('./utils/middleware');
@@ -41,7 +42,7 @@ app.set('views',path.join(__dirname, 'views'))
 app.use(session(sessionConfig))
 app.use(flash())
 app.use(express.urlencoded({ extended: true }));
-//app.use(methodOverride('_method'));
+app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')))
 app.use((req,res,next)=>{
     res.locals.currentUser = req.session.user_id
@@ -54,6 +55,9 @@ app.use('/books/:id/reviews',reviews)
 app.use('/',profile)
 app.use('/:id/lists',lists)
 
+app.get('/test',(req,res) => {
+    res.render('test')
+})
 app.all('*',(req,res, next) => {
     next(new ExpressError('Page Not Found', 404))
 })

@@ -1,0 +1,33 @@
+<% layout('/layouts/boilerplate') %>
+<div class="d-flex">
+    <div class="cover-container d-flex w-100 h-100 mx-auto p-3 flex-column">
+        <div class="row">
+            <form class="input-group needs-validation" action="/books/search" method="POST" novalidate>
+                <input type="search" class="form-control rounded" name="searchKey" placeholder="Search" aria-label="q" aria-describedby="search-addon" required/>
+                <button class="btn btn-outline-primary">search</button>
+            </form>
+        </div>
+    </div>
+</div> 
+
+
+
+<div class="row align-items-center justify-content-center mt-3">
+    <% for(book of books) {%> 
+    <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+        <div class="card mb-4"style="vh-30 max-width: 22rem;">
+            <img src="<%=book.imgUrl%>" alt="<%=book.title%>" class="card-img-top">
+            <div class="card-body">
+                    <h5 class="card-title text-truncate"><%=book.title%></h5>
+                    <h6 class="card-subtitle">by <%=book.author%></h6>
+                    <div class="text-truncate-container">
+                        <p class="card-text mt-2  text-muted"><%= book.description%></p>
+                    </div>
+                    <form action="/books/googleId/<%=book.id%>" method="POST" class="d-inline">
+                        <button class="btn btn-primary mt-2">Add to Books</button>
+                    </form>
+            </div>
+        </div>
+    </div>        
+    <% } %>     
+</div>
