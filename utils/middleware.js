@@ -39,8 +39,22 @@ module.exports.validateUserLogin = (req, res, next) => {
     }
 }
 
+module.exports.allegedUser = (req,res,next)=>{
+    if(req.params.username !== req.session.username){
+        req.flash('error','You are not allowed to do do that')
+        return res.redirect(req.originalUrl.slice(0,-4))
+    }
+    next();
+}
+module.exports.isAdmin = (req,res,next) => {
+    if(req.session.username !== 'admin'){
+        req.flash('error','Sorry, You are not authorized to do that ')
+        res.redirect('/')
+    }
+    next();
+}
 module.exports.isNotLoggedIn = (req, res, next)=> {
-    if(!req.session.user_id){
+    if(!req.session.username){
         req.session.returnTo = req.originalUrl 
         req.flash('error','You must be logged in to do that')
         res.redirect('/login')
@@ -49,7 +63,7 @@ module.exports.isNotLoggedIn = (req, res, next)=> {
 }
 
 module.exports.isLoggedIn = (req, res, next)=> {
-    if(req.session.user_id){
+    if(req.session.username){
         req.flash('error','You are already logged in')
         res.redirect('/')
     }

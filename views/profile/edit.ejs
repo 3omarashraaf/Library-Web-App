@@ -1,0 +1,59 @@
+<% layout('/layouts/boilerplate') %>
+<div class="row">
+    <div class="card col-md-6 offset-md-3 my-5 col-xl-6 offset-xl-3">
+        <div class="card-title text-center fw-semibold mt-3"> <h2>Edit Profile</h2> </div>
+        <div class="card-body">
+                <form action="/<%= user.username%>" method="POST" class="needs-validation" novalidate>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="name" name="user[name]" autofocus  value="<%= user.name%>" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="user[email]"  value="<%= user.email%>" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="user[password]" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="conf-password" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control " id="conf-password" name="" >
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+ 
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="about" class="form-label">About me</label>
+                            <textarea name="user[about]" id="about" cols="30" rows="3" class="form-control"  ><%= user.about%></textarea>
+                        </div>
+                        <div class="col-12 mb-4">
+                            <label for="pfpUrl" class="form-label">Profile Picture</label>
+                            <input type="text" id="pfpUrl" name="user[pfpUrl]" class="form-control" value="<%= user.pfpUrl%>" >
+                        </div>
+                        <div class="col-12 d-grid gap-2 my-2" >
+                            <button  class="btn btn-success  btn-block">Edit</button>
+                        </div> 
+                        <div class="col-12 d-grid gap-2 mb-3" >
+                            <a  class="btn btn-danger btn-block" href="/<%= user.username%>">Back To Profile</a>
+                        </div>
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>

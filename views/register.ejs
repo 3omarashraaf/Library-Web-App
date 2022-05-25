@@ -1,35 +1,49 @@
 <% layout('/layouts/homeBoilerplate') %>
 <div class="row">
-    <div class="card col-md-6 offset-md-3 my-5 col-xl-4 offset-xl-4">
+    <div class="card col-md-6 offset-md-3 my-5 col-xl-6 offset-xl-3">
         <div class="card-title text-center fw-semibold text-light mt-3"> <h2>Register</h2> </div>
         <div class="card-body">
                 <form action="/register" method="POST" class="needs-validation" novalidate>
-                    <div class="mb-3">
-                        <label for="username" class="form-label text-light">Username</label>
-                        <input type="text" class="form-control" id="username" name="user[username]" autofocus required>
-                        <div class="valid-feedback">
-                            Looks good!
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="name" class="form-label text-light">Full Name</label>
+                                <input type="text" class="form-control" id="name" name="user[name]" autofocus required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label text-light">Email</label>
+                                <input type="email" class="form-control" id="email" name="user[email]" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label text-light">Email</label>
-                        <input type="email" class="form-control" id="email" name="user[email]" required>
-                        <div class="valid-feedback">
-                            Looks good!
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="username" class="form-label text-light">Username</label>
+                                <input type="text" class="form-control" id="username" name="user[username]" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="password" class="form-label text-light">Password</label>
+                                <input type="password" class="form-control " id="password" name="user[password]" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+ 
                         </div>
-                    </div>
-                    <div class="mb-4">
-                        <label for="password" class="form-label text-light">Password</label>
-                        <input type="password" class="form-control " id="password" name="user[password]" required>
-                        <div class="valid-feedback">
-                            Looks good!
+                        <div class="col-12 d-grid gap-2 mb-3" >
+                            <button  class="btn btn-success  btn-block">Register</button>
+                        </div> 
+                        <div class="  mb-2 text-center">
+                            <a class="text-decoration-none text-secondary" href="/login">Already have an account?</a>                   
                         </div>
-                    </div>
-                    <div class="d-grid gap-2 mb-3" >
-                        <button  class="btn btn-success  btn-block">Register</button>
-                    </div>  
-                    <div class="mb-2 text-center">
-                        <a class="text-decoration-none text-secondary" href="/login">Already have an account?</a>                   
                     </div>
                 </form>
         </div>

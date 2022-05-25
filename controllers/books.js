@@ -27,7 +27,7 @@ module.exports.newBook = async(req,res) => {
 }
 
 module.exports.showOneBook = async(req,res) => {
-    const book = await Book.findOne({isbn: req.params.isbn}).populate('reviews')
+    const book = await Book.findOne({isbn: req.params.isbn}).populate({path:'reviews',populate:{path:'user'}})
     res.render('books/show', { book });
 }
 

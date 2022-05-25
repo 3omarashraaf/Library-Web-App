@@ -6,7 +6,6 @@
             <form class="input-group needs-validation" action="/books/search" method="POST" novalidate>
                 <input type="text" class="form-control rounded" name="searchKey" id="searchKey" placeholder="Search" required>
                 <button type= "submit" class="btn btn-outline-primary">search</button>
-                <a href="/books/new" class="btn btn-success">Create New </a>
             </form>
         </div>
     </div>
@@ -15,7 +14,7 @@
 <div class="row align-items-center justify-content-center mt-3">
     <% for(book of books) {%> 
     <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-        <div class="card mb-4"style="vh-30 max-width: 22rem;">
+        <div class="card mb-4"style="max-width: 22rem;">
             <img src="<%=book.imgUrl%>" alt="<%=book.title%>" class="card-img-top">
             <div class="card-body">
                     <h5 class="card-title text-truncate"><%=book.title%></h5>

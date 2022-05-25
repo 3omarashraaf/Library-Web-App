@@ -19,6 +19,7 @@ module.exports.reviewSchema = Joi.object({
 
 module.exports.userRegSchema = Joi.object({
     user: Joi.object({
+        name: Joi.string().required(),
         username: Joi.string().required(),
         password: Joi.string().required(),
         email: Joi.string().email().required()

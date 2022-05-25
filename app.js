@@ -8,7 +8,7 @@ const router = express.Router();
 const methodOverride = require('method-override');
 
 //Require utils
-const { isLoggedIn , isNotLoggedIn} = require('./utils/middleware');
+const { isLoggedIn , isNotLoggedIn, isAdmin} = require('./utils/middleware');
 const mongoConnect = require('./utils/mongoConnect')
 const catchAsync = require('./utils/catchAsync')
 const ExpressError = require('./utils/ExpressError')
@@ -45,19 +45,20 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')))
 app.use((req,res,next)=>{
-    res.locals.currentUser = req.session.user_id
+    res.locals.currentUser = req.session.username
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')
     next()
+})
+app.get('/admin',isAdmin,(req,res) => {
+    res.render('admin')
 })
 app.use('/books',books)
 app.use('/books/:isbn/reviews',reviews)
 app.use('/',profile)
 app.use('/:id/lists',lists)
 
-app.get('/test',(req,res) => {
-    res.render('test')
-})
+
 app.all('*',(req,res, next) => {
     next(new ExpressError('Page Not Found', 404))
 })
