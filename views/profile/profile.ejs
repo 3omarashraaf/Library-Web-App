@@ -48,38 +48,45 @@
           </div>
         </div>     
         <div class="card-body p-4 text-black">
-            <% if(user.about) {%>
-              <div class="mb-5">
-                <p class="lead fw-normal mb-1">About</p>
-                <div class="p-4" style="background-color: #f8f9fa;">
-                  <p class="font-italic mb-1"><%= user.about%></p>
-
-                </div>
+          <% if(user.about) {%>
+          <div class="mb-5">
+              <p class="lead fw-normal mb-1">About</p>
+              <div class="p-4" style="background-color: #f8f9fa;">
+                <p class="font-italic mb-1"><%= user.about%></p>
               </div>
-            <% } %>  
-            <div class="d-flex justify-content-between align-items-center mb-4">
-              <p class="lead fw-normal mb-0">Lists</p>
+          </div>
+          <% } %>  
+          <div class="d-flex justify-content-start align-items-center mb-4">
+            <p class="lead fw-normal mb-0">Lists</p>
+            <a href="/<%= user.username%>/lists/new" class="btn btn-outline-dark ms-auto">New List</a>
+          </div>
+          <div class="row justify-content-center" >
+            <div class="row align-items-center justify-content-start mt-3">
+              <% for(list of user.lists) {%> 
+              <div class="col-12 col-md-6 col-lg-6 col-xl-4">
+                  <div class="card mb-4 "style="max-width: 22rem;">
+                    <div class="list">
+                      <img src="<%= list.coverUrl%>" alt="..." class="card-img-top">
+                    </div>  
+                      <a class="card-img-overlay d-flex flex-column text-decoration-none text-light " href="/<%= user.username%>/lists/<%= list._id%>">
+                        <div class="">
+                          <p class="card-text"></p>
+                        </div>
+                        <div class="mt-auto">
+                          <div class="row d-flex">
+                            <div class="col-9">
+                              <h5><%=list.name%></h5>
+                              <h6>by <%if(currentUser === user.username){%>me<% }else{ %><%= user.username%><%}%></h6>
+                            </div>
+                            <div class="col-3 ms-auto"> &#10084; 120</div>
+                          </div>
+                        </div>
+                      </a>
+                  </div>
+              </div>        
+              <% } %>     
             </div>
-            <div class="row g-2">
-              <div class="col mb-2">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp"
-                  alt="image 1" class="w-100 rounded-3">
-              </div>
-              <div class="col mb-2">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(107).webp"
-                  alt="image 1" class="w-100 rounded-3">
-              </div>
-            </div>
-            <div class="row g-2">
-              <div class="col">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(108).webp"
-                  alt="image 1" class="w-100 rounded-3">
-              </div>
-              <div class="col">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(114).webp"
-                  alt="image 1" class="w-100 rounded-3">
-              </div>
-            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -42,7 +42,7 @@ module.exports.validateUserLogin = (req, res, next) => {
 module.exports.allegedUser = (req,res,next)=>{
     if(req.params.username !== req.session.username){
         req.flash('error','You are not allowed to do do that')
-        return res.redirect(req.originalUrl.slice(0,-4))
+        return res.redirect(`/`)
     }
     next();
 }

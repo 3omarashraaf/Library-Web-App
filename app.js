@@ -55,8 +55,8 @@ app.get('/admin',isAdmin,(req,res) => {
 })
 app.use('/books',books)
 app.use('/books/:isbn/reviews',reviews)
+app.use('/',lists)
 app.use('/',profile)
-app.use('/:id/lists',lists)
 
 
 app.all('*',(req,res, next) => {

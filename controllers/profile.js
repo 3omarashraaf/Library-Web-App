@@ -1,6 +1,6 @@
-const User = require('../models/user');
 const bcrypt = require('bcrypt');
-const user = require('../models/user');
+const User = require('../models/user');
+const List = require('../models/list');
 
 module.exports.login = async (req,res)=>{             // Submit login form
     const { username, password} = req.body.user
@@ -33,13 +33,18 @@ module.exports.register = async (req,res)=>{          // Submit Register form  C
         email,
         password: hash
     })
+
     await user.save()
     req.session.username = user.username
     req.session.user_id = user._id
+    const list = new List({name:'Fav',owner: user._id})
+    user.lists.push(list)
+    await user.save()
+    await list.save()
     res.redirect('/')
 }
 module.exports.showProfile = async (req,res) => {
-    const user = await User.findOne({username: req.params.username})
+    const user = await User.findOne({username: req.params.username}).populate('lists')
     res.render('profile/profile',{user})
 
 }
