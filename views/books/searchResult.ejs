@@ -9,25 +9,53 @@
         </div>
     </div>
 </div> 
-
-
+  
 
 <div class="row align-items-center justify-content-center mt-3">
-    <% for(book of books) {%> 
+    <% for(const [i, book] of books.entries()) { %> 
     <div class="col-12 col-md-6 col-lg-4 col-xl-3">
         <div class="card mb-4"style="vh-30 max-width: 22rem;">
             <img src="<%=book.imgUrl%>" alt="<%=book.title%>" class="card-img-top">
             <div class="card-body">
-                    <h5 class="card-title text-truncate"><%=book.title%></h5>
-                    <h6 class="card-subtitle">by <%=book.author%></h6>
-                    <div class="text-truncate-container">
-                        <p class="card-text mt-2  text-muted"><%= book.description%></p>
+                <h5 class="card-title text-truncate"><%=book.title%></h5>
+                <h6 class="card-subtitle">by <%=book.author%></h6>
+                <div class="text-truncate-container">
+                    <p class="card-text mt-2  text-muted"><%= book.description%></p>
+                </div>
+                <div class="mt-2">
+                        <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal<%=i%>">
+                        View details
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal<%=i%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" id="{{id}}">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"><%= book.title%></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="d-flex flex-column align-items-center justify-content-center">
+                                        <img src="<%= book.imgUrl %> " alt="" class="img-thumbnail modal-img">
+                                        <h6 class="text-muted mt-2"> ISBN: <%=book.isbn%></h6>
+                                    </div>
+                                    <h4>Author: <%=book.author%></h4>
+                                    <p>
+                                        <span class="fw-semibold">Description:</span> <%=book.description%>
+                                    </p>    
+                                </div>
+                                <div class="modal-footer">
+                                    <% if (currentUser) {%> 
+                                        <form action="/books/googleId/<%=book.id%>" method="POST" class="d-inline">
+                                            <button class="btn btn-primary mt-2">Add to Books</button>
+                                        </form>
+                                        <% } %> 
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <% if (currentUser) {%> 
-                    <form action="/books/googleId/<%=book.id%>" method="POST" class="d-inline">
-                        <button class="btn btn-primary mt-2">Add to Books</button>
-                    </form>
-                    <% } %> 
+                </div>
             </div>
         </div>
     </div>        

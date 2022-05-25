@@ -13,7 +13,8 @@ const BookSchema = new Schema({
     } ,
     isbn: {
         type: String,
-        required: true 
+        required: true,
+        unique: true
     } ,
     description: {
         type: String,
