@@ -7,7 +7,7 @@ module.exports.showAll = async(req,res) => {
 }
 
 module.exports.search = async(req,res) => { 
-    const books = await fetchBooks(req.body.searchKey)
+    const books = await fetchBooks(req.query.searchKey)
     res.render('books/searchResult',{books})
 }
 

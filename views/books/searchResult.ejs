@@ -2,8 +2,8 @@
 <div class="d-flex">
     <div class="cover-container d-flex w-100 h-100 mx-auto p-3 flex-column">
         <div class="row">
-            <form class="input-group needs-validation" action="/books/search" method="POST" novalidate>
-                <input type="search" class="form-control rounded" name="searchKey" placeholder="Search" aria-label="q" aria-describedby="search-addon" required/>
+            <form class="input-group needs-validation" action="/books/googleSearch" method="GET" novalidate>
+                <input type="search" class="form-control rounded" name="searchKey" placeholder="Search" aria-label="q" aria-describedby="search-addon" id="q" required/>
                 <button class="btn btn-outline-primary">search</button>
             </form>
         </div>
