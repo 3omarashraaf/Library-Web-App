@@ -51,7 +51,7 @@ app.use((req,res,next)=>{
     next()
 })
 app.use('/books',books)
-app.use('/books/:id/reviews',reviews)
+app.use('/books/:isbn/reviews',reviews)
 app.use('/',profile)
 app.use('/:id/lists',lists)
 

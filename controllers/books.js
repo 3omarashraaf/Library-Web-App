@@ -26,8 +26,8 @@ module.exports.newBook = async(req,res) => {
     res.redirect(`/books/${book.isbn}`)
 }
 
-module.exports.oneBook = async(req,res) => {
-    const book = await Book.findOne({isbn: req.params.isbn})
+module.exports.showOneBook = async(req,res) => {
+    const book = await Book.findOne({isbn: req.params.isbn}).populate('reviews')
     res.render('books/show', { book });
 }
 

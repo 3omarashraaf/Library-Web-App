@@ -1,4 +1,4 @@
-const {bookSchema, userRegSchema, userLoginSchema} = require('../utils/schemas.js');
+const {bookSchema,reviewSchema ,userRegSchema, userLoginSchema} = require('../utils/schemas.js');
 const ExpressError = require('./ExpressError.js')
 
 module.exports.validateBook = (req, res, next) => {
@@ -10,6 +10,16 @@ module.exports.validateBook = (req, res, next) => {
         next();
     }
 }
+module.exports.validateReview = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    } else {
+        next();
+    }
+}
+
 module.exports.validateUserReg = (req, res, next) => {
     const { error } = userRegSchema.validate(req.body);
     if (error) {
