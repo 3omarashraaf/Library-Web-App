@@ -13,8 +13,8 @@
 
 <div class="row align-items-center justify-content-start mt-3">
     <% for(book of books) {%> 
-    <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-        <div class="card mb-4"style="max-width: 22rem;">
+    <div class="col-12 col-md-6 col-lg-4 col-xl-3 book">
+        <div class="card mb-4  "style="max-width: 22rem;">
             <img src="<%=book.imgUrl%>" alt="<%=book.title%>" class="card-img-top">
             <div class="card-body">
                     <h5 class="card-title text-truncate"><%=book.title%></h5>

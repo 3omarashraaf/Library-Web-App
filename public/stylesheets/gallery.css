@@ -12,11 +12,6 @@
   display:inline-block;
 }
 
-
-/* 
-#002f4b,#dc4225 
-Convert HEX to RGBA - http://hex2rgba.devoth.com/
-*/
 .list:after {
   content:'';
   position:absolute;
@@ -33,9 +28,7 @@ Convert HEX to RGBA - http://hex2rgba.devoth.com/
     height: 40vh;
     object-fit:cover;
 }
-.card-header{
-  padding: 0;
-}
+
 .text-truncate-container {
     width: 100%;
 }
@@ -45,11 +38,12 @@ Convert HEX to RGBA - http://hex2rgba.devoth.com/
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-.test{
+.bookImg{
   height: 50vh;
 }
 .card-header{
   position: relative;
+  padding: 0;
   border-bottom: 0;
 }
 .pfp{
@@ -58,14 +52,14 @@ Convert HEX to RGBA - http://hex2rgba.devoth.com/
 .userDet2{
   display: none;
 }
-  .bb{
-    margin: 1rem;
-  }
+.bb{
+  margin: 1rem;
+}
 @media (max-width: 767px) { 
-  .blah{
-    display: flex;
-   align-items: center;
-   justify-content: center;   
+  .book{
+   display: flex!important;
+   align-items: center!important;
+   justify-content: center!important;   
   }  
 }
 @media (max-width: 576px){

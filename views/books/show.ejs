@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-sm-12 col-md-3 d-flex flex-column justify-content-center align-items-center mb-auto">
-        <img src="<%= book.imgUrl %> " class="d-inline img-thumbnail img-fluid test" alt="...">
+        <img src="<%= book.imgUrl %> " class="d-inline img-thumbnail img-fluid bookImg" alt="...">
         <h6 class="card-subtitle fs-6 text-muted mt-3">ISBN: <%= book.isbn%></h6>
         <% if(currentUser === 'admin') { %>
             <div class="mt-3">
@@ -14,12 +14,12 @@
             </div>
         <% } %>  
     </div>
-        <div class="col-5 d-flex flex-column mb-3">
+        <div class="col-md-5 col-12 d-flex flex-column mb-3">
             <h5 class="card-title mt-2 fs-2"><%= book.title%></h5>
             <h6 class="card-subtitle fs-5">by <%= book.author %></h6>
             <p class="card-text mt-4"><%=book.description%></p>
         </div>
-        <div class="col-4 d-flex flex-column mb-3">
+        <div class="col-md-4 col-12 d-flex flex-column mb-3">
             <% if(currentUser) {%> 
             <h2>Leave a review</h2>
             <form action="/books/<%=book.isbn%>/reviews" method="POST" class="needs-validation" novalidate>
