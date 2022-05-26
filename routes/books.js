@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const catchAsync = require('../utils/catchAsync');
 const books = require('../controllers/books');
-const {validateBook} = require('../utils/middleware');
+const {validateBook,isNotLoggedIn} = require('../utils/middleware');
 
 
-router.get('/googleSearch',catchAsync(books.search))                  // Search Books 
+router.get('/googleSearch',isNotLoggedIn,catchAsync(books.search))                  // Search Books 
 router.get('/',catchAsync(books.showAll))                             // Show all books   R             
 router.get('/new',(req,res) =>{res.render('books/new')})              // Render New Book Form 
 router.post('/', validateBook ,catchAsync(books.newBook))             // Create a book    C

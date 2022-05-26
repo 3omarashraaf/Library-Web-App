@@ -1,5 +1,6 @@
 const fetchBooks = require('../utils/fetchBooks');
 const Book = require('../models/book');
+const User = require('../models/user');
 
 module.exports.showAll = async(req,res) => {
     const books = await Book.find({})
@@ -8,7 +9,8 @@ module.exports.showAll = async(req,res) => {
 
 module.exports.search = async(req,res) => { 
     const books = await fetchBooks(req.query.searchKey)
-    res.render('books/searchResult',{books})
+    const user = await User.findById(req.session.user_id).populate('lists')
+    res.render('books/searchResult',{books,user})
 }
 
 module.exports.addOneBook = async(req,res) => {

@@ -45,7 +45,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')))
 app.use((req,res,next)=>{
-    res.locals.currentUser = req.session.username
+    res.locals.currentUser = req.session.user
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')
     next()

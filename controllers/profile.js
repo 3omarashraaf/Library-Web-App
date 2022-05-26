@@ -4,12 +4,15 @@ const List = require('../models/list');
 
 module.exports.login = async (req,res)=>{             // Submit login form
     const { username, password} = req.body.user
-    const user = await User.findOne({username})
+    const user = await User.findOne({username}).populate('lists')
      if (user){
         const validUser = await bcrypt.compare(password, user.password)
         if (validUser){
-            req.session.username = user.username
-            req.session.user_id = user._id
+            req.session.user = {
+                username: user.username,
+                user_id : user._id,
+                lists: user.lists.map(el=>  ({name: el.name,id:el._id}))
+            }
             const redirectUrl = req.session.returnTo || '/'
             delete req.session.returnTo 
             return res.redirect(redirectUrl)

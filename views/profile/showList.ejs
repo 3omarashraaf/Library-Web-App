@@ -7,25 +7,32 @@
         <div class="row ">
             <div class="col-9">
                 <h5 class="card-title"><%= list.name %> </h5>
-                <h6 class="card-subtitle">by <%if(currentUser === username){%>me<% }else{ %><%= username%><%}%></h6>
+                <h6 class="card-subtitle">by <%if(currentUser.username === username){%>me<% }else{ %><%= username%><%}%></h6>
                 <p class="card-text text-muted "><%= list.description %> </p>
-                <div class="mt-3">
-                    <% if(currentUser === username) { %>
+                
+            </div>
+            <div class="col-3 d-flex flex-column align-items-end">
+                <div>
+                    &#10084; 120
+                </div>
+                <div class="mt-2">
+                    <% if(currentUser.username === username) { %>
                     <a href="/<%=username%>/lists/<%=list._id%>/edit" class="btn btn-primary">Edit </a>
                     <form action="/<%=username%>/lists/<%=list._id%>?_method=DELETE" method="POST" class="d-inline">
                         <button class="btn btn-danger">Delete</button>
                     </form>
                     <% } %> 
                 </div>
+            
             </div>
-            <div class="col-3 d-flex justify-content-end"> &#10084; 120</div>
+                 
             </div>
         </div>
         <% if(!list.books.length) {%>
             <p class="text-muted text-center">Let's Add some books to this list!</p>
         <% } else {%>
-            <div class="row align-items-center justify-content-start mt-3">
-                <% for(book of books) {%> 
+            <div class="row align-items-center justify-content-start p-3">
+                <% for(book of list.books) {%> 
                 <div class="col-12 col-md-6 col-lg-4 col-xl-3">
                     <div class="card mb-4"style="max-width: 22rem;">
                         <img src="<%=book.imgUrl%>" alt="<%=book.title%>" class="card-img-top">
@@ -36,7 +43,11 @@
                                     <p class="card-text mt-2  text-muted"><%= book.description%></p>
                                 </div>
                                 <a href="/books/<%=book.isbn%>" class="btn btn-primary mt-2">View details</a>
-                                <a href="/books/<%=book.isbn%>" class="btn btn-danger mt-2">Remove</a>
+                                <% if(currentUser.username === username) { %>
+                                <form action="/<%=username%>/lists/<%=list._id%>/books/<%=book.isbn%>?_method=DELETE" method="POST" class="d-inline">
+                                    <button class="btn btn-danger mt-2">Remove</button>
+                                </form>
+                                <% } %> 
                         </div>
                     </div>
                 </div>        
