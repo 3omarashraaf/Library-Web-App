@@ -55,11 +55,11 @@
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                 <form action="/<%= user.username%>/lists/addBook/1" method="POST">
-                                  <%for(list of user.lists) {  %> 
+                                 <form action="/<%= currentUser.username%>/lists/addBook/1" method="POST">
+                                  <%for(list of currentUser.lists) {  %> 
                                     <div class="form-check d-flex justify-content-start align-items-center mb-3">
-                                        <input class="form-check-input mx-3" type="radio" name="choosenList" value="<%= list.name%>" >
-                                        <label class="form-check-label me-3" for="<%=list.name%>"> <%= list.name%></label>
+                                        <input class="form-check-input mx-3" type="radio" name="choosenList" value="<%= list.id%>" >
+                                        <label class="form-check-label me-3" for="<%=list.id%>"> <%= list.name%></label>
                                     </div>
                                   <%} %> 
                                   <div class="form-check d-flex justify-content-start align-items-center mb-3">

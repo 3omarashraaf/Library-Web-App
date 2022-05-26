@@ -9,8 +9,7 @@ module.exports.showAll = async(req,res) => {
 
 module.exports.search = async(req,res) => { 
     const books = await fetchBooks(req.query.searchKey)
-    const user = await User.findById(req.session.user_id).populate('lists')
-    res.render('books/searchResult',{books,user})
+    res.render('books/searchResult',{books})
 }
 
 module.exports.addOneBook = async(req,res) => {
@@ -30,11 +29,19 @@ module.exports.newBook = async(req,res) => {
 
 module.exports.showOneBook = async(req,res) => {
     const book = await Book.findOne({isbn: req.params.isbn}).populate({path:'reviews',populate:{path:'user'}})
+    if(!book){
+        req.flash('error',`Sorry we don't have that book`)
+        res.redirect('/books')
+    }
     res.render('books/show', { book });
 }
 
 module.exports.showEditPage = async (req, res) => {
     const book = await Book.findOne({isbn: req.params.isbn})
+    if(!book){
+        req.flash('error','Sorry cannot find this book')
+        res.redirect('/books')
+    }
     res.render('books/edit', { book });
 }
 

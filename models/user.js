@@ -41,6 +41,11 @@ UserSchema.post('findOneAndDelete',async(doc)=>{
                 $in: doc.lists
             }
         })
+        await Review.deleteMany({
+            user: {
+                $in: doc
+            }
+        })
     }
 })
 

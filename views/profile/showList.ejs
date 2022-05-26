@@ -7,7 +7,7 @@
         <div class="row ">
             <div class="col-9">
                 <h5 class="card-title"><%= list.name %> </h5>
-                <h6 class="card-subtitle">by <%if(currentUser.username === username){%>me<% }else{ %><%= username%><%}%></h6>
+                <h6 class="card-subtitle">by <%if(currentUser && currentUser.username === username){%>me<% }else{ %><%= username%><%}%></h6>
                 <p class="card-text text-muted "><%= list.description %> </p>
                 
             </div>
@@ -16,7 +16,7 @@
                     &#10084; 120
                 </div>
                 <div class="mt-2">
-                    <% if(currentUser.username === username) { %>
+                    <% if(currentUser && currentUser.username === username) { %>
                     <a href="/<%=username%>/lists/<%=list._id%>/edit" class="btn btn-primary">Edit </a>
                     <form action="/<%=username%>/lists/<%=list._id%>?_method=DELETE" method="POST" class="d-inline">
                         <button class="btn btn-danger">Delete</button>
@@ -43,7 +43,7 @@
                                     <p class="card-text mt-2  text-muted"><%= book.description%></p>
                                 </div>
                                 <a href="/books/<%=book.isbn%>" class="btn btn-primary mt-2">View details</a>
-                                <% if(currentUser.username === username) { %>
+                                <% if(currentUser && currentUser.username === username) { %>
                                 <form action="/<%=username%>/lists/<%=list._id%>/books/<%=book.isbn%>?_method=DELETE" method="POST" class="d-inline">
                                     <button class="btn btn-danger mt-2">Remove</button>
                                 </form>

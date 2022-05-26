@@ -66,6 +66,17 @@ app.all('*',(req,res, next) => {
 app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
     if (!err.message) err.message = 'Oh No, Something Went Wrong!'
+   // Mongo Duplicate Keys errors  in Registering 
+    if(err.code && err.code === 11000 ){
+        if(err.keyPattern.username){
+            req.flash('error',`This username "${err.keyValue.username}" is already used`)
+            res.redirect('/register')
+        } else if (err.keyPattern.email){
+            req.flash('error',`This email is already used`)
+            res.redirect('/register')
+        }
+    }
+
     res.status(statusCode).render('error', { err })
 })
 

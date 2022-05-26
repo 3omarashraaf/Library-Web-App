@@ -10,7 +10,7 @@
             <div class="col-sm-3 ms-5 d-flex flex-column justify-content-center align-items-center">
               <img src="https://i.pinimg.com/474x/8f/1b/09/8f1b09269d8df868039a5f9db169a772.jpg" 
                 alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2" >
-                <% if(user.username === currentUser.username) { %> 
+                <% if(currentUser && user.username === currentUser.username) { %> 
               <a class="btn btn-outline-light editBtn" data-mdb-ripple-color="dark" href="/<%= user.username%>/edit" >
                 Edit profile
               </a>
@@ -58,7 +58,9 @@
           <% } %>  
           <div class="d-flex justify-content-start align-items-center mb-4">
             <p class="lead fw-normal mb-0">Lists</p>
-            <a href="/<%= user.username%>/lists/new" class="btn btn-outline-dark ms-auto">New List</a>
+            <% if(currentUser && currentUser.username === user.username) {%>
+              <a href="/<%= user.username%>/lists/new" class="btn btn-outline-dark ms-auto">New List</a>
+            <% } %>  
           </div>
           <div class="row justify-content-center" >
             <div class="row align-items-center justify-content-start mt-3">
@@ -76,7 +78,7 @@
                           <div class="row d-flex">
                             <div class="col-9">
                               <h5><%=list.name%></h5>
-                              <h6>by <%if(currentUser.username === user.username){%>me<% }else{ %><%= user.username%><%}%></h6>
+                              <h6>by <%if(currentUser && currentUser.username === user.username){%>me<% }else{ %><%= user.username%><%}%></h6>
                             </div>
                             <div class="col-3 ms-auto"> &#10084; 120</div>
                           </div>

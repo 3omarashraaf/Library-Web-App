@@ -1,3 +1,4 @@
+const Review = require('../models/review');
 const {bookSchema,reviewSchema ,userRegSchema, userLoginSchema} = require('../utils/schemas.js');
 const ExpressError = require('./ExpressError.js')
 
@@ -38,7 +39,27 @@ module.exports.validateUserLogin = (req, res, next) => {
         next();
     }
 }
-
+module.exports.duplicateKeys = (err, req, res, next) => {
+    if(err.code === 11000 ){
+        if(err.keyPattern.username){
+            req.flash('error',`This username "${err.keyValue.username}" is already used`)
+            return res.redirect('/register')
+        } else if (err.keyPattern.email){
+            req.flash('error',`This email is already used`)
+            return res.redirect('/register')
+        }
+    }
+    next();
+}
+module.exports.allegedReviewOwner = async (req,res,next)=>{
+    const review = await Review.findById(req.params.id).populate('user')
+    console.log(review,req.params)
+    if(review.user.username !== req.session.user.username){
+        req.flash('error','You are not allowed to do do that')
+        return res.redirect(`/`)
+    }
+    next();
+}
 module.exports.allegedUser = (req,res,next)=>{
     if(req.params.username !== req.session.user.username){
         req.flash('error','You are not allowed to do do that')

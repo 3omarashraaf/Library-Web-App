@@ -36,18 +36,24 @@ module.exports.register = async (req,res)=>{          // Submit Register form  C
         email,
         password: hash
     })
-
     await user.save()
-    req.session.username = user.username
-    req.session.user_id = user._id
     const list = new List({name:'Fav',owner: user._id})
     user.lists.push(list)
     await user.save()
     await list.save()
+    req.session.user = {
+        username: user.username,
+        user_id : user._id,
+        lists: user.lists.map(el=>  ({name: el.name,id:el._id}))
+    }
     res.redirect('/')
 }
 module.exports.showProfile = async (req,res) => {
     const user = await User.findOne({username: req.params.username}).populate('lists')
+    if(!user){
+        req.flash('error',`There's no one with the username "${req.params.username}" `)
+        res.redirect('/')
+    }
     res.render('profile/profile',{user})
 
 }

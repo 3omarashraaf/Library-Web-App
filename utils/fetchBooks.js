@@ -5,20 +5,22 @@ module.exports = async (searchKey) => {
     const response = await fetch(url) 
     .then(response => response.json());
     var books = []
-    for (item of response.items) {
-        const bookData = item.volumeInfo
-        if(bookData && 'title' in bookData && 'description' in bookData && 'industryIdentifiers' in bookData 
-            && 'authors' in bookData && 'imageLinks' in bookData 
-            && bookData.industryIdentifiers.filter(element => element.type === 'ISBN_13' ).length){
-            const book = {
-                id: item.id,
-                title: bookData.title,
-                description: bookData.description,
-                author: bookData.authors[0],
-                isbn: bookData.industryIdentifiers.filter(element => element.type === 'ISBN_13' )[0].identifier,
-                imgUrl: bookData.imageLinks.smallThumbnail || bookData.imageLinks.Thumbnail
+    if(response.items){
+        for (item of response.items) {
+            const bookData = item.volumeInfo
+            if(bookData && 'title' in bookData && 'description' in bookData && 'industryIdentifiers' in bookData 
+                && 'authors' in bookData && 'imageLinks' in bookData 
+                && bookData.industryIdentifiers.filter(element => element.type === 'ISBN_13' ).length){
+                const book = {
+                    id: item.id,
+                    title: bookData.title,
+                    description: bookData.description,
+                    author: bookData.authors[0],
+                    isbn: bookData.industryIdentifiers.filter(element => element.type === 'ISBN_13' )[0].identifier,
+                    imgUrl: bookData.imageLinks.smallThumbnail || bookData.imageLinks.Thumbnail
+                }
+                books.push(book)
             }
-            books.push(book)
         }
     }
     return books;
