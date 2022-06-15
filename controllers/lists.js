@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 
 module.exports.newList = async (req,res) =>{
     const {name,coverUrl} = req.body.list
-    const id = req.session.user_id
+    const id = req.session.user.user_id
     const user = await User.findById(id)
     const list = new List({name,coverUrl,owner: id})
     await list.save()
@@ -42,14 +42,15 @@ module.exports.showEditList = async (req,res) =>{
 }
 module.exports.editList = async (req,res) =>{
     await List.findByIdAndUpdate(req.params.id, { ...req.body.list });
-    res.redirect(`/${req.session.username}`)
+    res.redirect(`/${req.session.user.username}`)
 }
 module.exports.addBook1 = async (req,res) => {
     let listId = req.body.choosenList
-    const bookArray = await fetchBooks(req.body.book.isbn)
-    const book = await Book.findOne({isbn: bookArray[0].isbn})
+    const bookArray = await fetchBooks(req.body.book.id)
+    let newBook = bookArray.filter(el=> el.isbn === req.body.book.isbn)[0]
+    let book = await Book.findOne({isbn: newBook.isbn})
     if(!book){
-        book = new Book(bookArray[0])
+        book = new Book(newBook)
         await book.save()
     }
     
@@ -65,15 +66,15 @@ module.exports.addBook1 = async (req,res) => {
         await list.save()
         req.session.user.lists.push({name: list.name,id: list.id})
     }else{
-        const list = await List.findById(listId)
-        if(list.books.map(el => el.isbn === book.isbn).length){
+        const list = await List.findById(listId).populate('books')
+        if(list.books.filter(el => el.isbn === book.isbn).length){
             req.flash('error',`this book is already in ${list.name}`)
             return res.redirect(`/${req.session.user.username}/lists/${listId}`)
         }
         list.books.push(book)
         await list.save()
     }
-    res.redirect(`/${user.username}/lists/${listId}`)
+    res.redirect(`/${req.session.user.username}/lists/${listId}`)
 }
 module.exports.addBook2 = async (req,res) => {
     let listId = req.body.choosenList
@@ -90,8 +91,8 @@ module.exports.addBook2 = async (req,res) => {
         await list.save()
         req.session.user.lists.push({name: list.name,id: list.id})
     }else{
-        const list = await List.findById(listId)
-        if(list.books.map(el => el.isbn === book.isbn).length){
+        const list = await List.findById(listId).populate('books')
+        if(list.books.filter(el => el.isbn === book.isbn).length){
             req.flash('error',`${book.title} is already in ${list.name}`)
             return res.redirect(`/${req.session.user.username}/lists/${list._id}`)
         }

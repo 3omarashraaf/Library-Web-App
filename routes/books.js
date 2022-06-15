@@ -9,7 +9,7 @@ router.get('/googleSearch',isNotLoggedIn,catchAsync(books.search))              
 router.get('/',catchAsync(books.showAll))                             // Show all books   R             
 router.get('/new',isNotLoggedIn,isAdmin,(req,res) =>{res.render('books/new')})              // Render New Book Form 
 router.post('/', validateBook,isNotLoggedIn,isAdmin ,catchAsync(books.newBook))             // Create a book    C
-router.post('/googleId/:id',isNotLoggedIn,catchAsync(books.addOneBook))             // Add book from google
+router.post('/:isbn/:id',isNotLoggedIn,catchAsync(books.addOneBook))             // Add book from google
 router.get('/:isbn',catchAsync(books.showOneBook))                    // Show one book
 router.get('/:isbn/edit',isNotLoggedIn,isAdmin, catchAsync(books.showEditPage))             // Render edit book Form   
 router.put('/:isbn', validateBook, isAdmin,isNotLoggedIn,catchAsync(books.editBook))        // Edit a book      U

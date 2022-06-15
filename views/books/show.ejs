@@ -76,7 +76,7 @@
                 <button class="btn btn-success mt-3">Submit</button>
             </form>
             <% } %> 
-            <% for(review of book.reviews) { console.log(book.reviews)%> 
+            <% for(review of book.reviews) { %> 
                 <div class="card mt-4">
                     <div class="card-body">
                         <h5 class="card-title"> by <a class="text-decoration-none text-muted" href="/<%= review.user.username %>">@<%= review.user.username %></a>  </h5>
