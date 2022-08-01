@@ -16,7 +16,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="/<%= currentUser.username%>/lists/addBook/2" method="POST">
+                                <form action="/<%= currentUser.username%>/lists/addToList" method="POST">
                                 <%for(list of currentUser.lists) {  %> 
                                 <div class="form-check d-flex justify-content-start align-items-center mb-3">
                                     <input class="form-check-input mx-3" type="radio" name="choosenList" value="<%= list.id%>" >

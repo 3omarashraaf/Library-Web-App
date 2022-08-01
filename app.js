@@ -1,4 +1,5 @@
 //Require Dependences
+require('dotenv').config();
 const express = require('express');
 const path = require('path')
 const session = require('express-session')
@@ -6,7 +7,11 @@ const engine = require('ejs-mate')
 const flash = require('connect-flash');
 const router = express.Router();
 const methodOverride = require('method-override');
+const MongoStore = require('connect-mongo');
 
+const dbURL = process.env.DB_URL || 'mongodb://localhost:27017/bookshelf'
+const secret = process.env.SECRET || 'thisshouldbeabettersecret'
+const port = process.env.PORT || 3000
 //Require utils
 const { isLoggedIn , isNotLoggedIn, isAdmin} = require('./utils/middleware');
 const mongoConnect = require('./utils/mongoConnect')
@@ -19,9 +24,14 @@ const reviews = require('./routes/reviews');
 const lists = require('./routes/lists');
 const profile = require('./routes/profile');
 
-
+const store = new MongoStore({
+    mongoUrl: 'mongodb://localhost:27017/bookshelf',
+    touchAfter: 24*60*60,
+    secret
+})
 const sessionConfig ={
-    secret: 'thisshouldbeabettersecret',
+    store,
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie:{
@@ -80,6 +90,6 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', { err })
 })
 
-app.listen(3000,() =>{
+app.listen(port,() =>{
     console.log(`Server is up on Port 3000`)
 })
