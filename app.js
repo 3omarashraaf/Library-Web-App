@@ -54,12 +54,14 @@ app.use(flash())
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')))
+
 app.use((req,res,next)=>{
-    res.locals.currentUser = null || req.session.user
-    res.locals.success = null || req.flash('success')
-    res.locals.error = null || req.flash('error')
-    next()
+    res.locals.currentUser = null || req.session.user;
+    res.locals.success = null || req.flash('success');
+    res.locals.error = null || req.flash('error');
+    next();
 })
+
 app.get('/admin',isAdmin,(req,res) => {
     res.render('admin')
 })
