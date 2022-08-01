@@ -91,5 +91,5 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(port,() =>{
-    console.log(`Server is up on Port 3000`)
+    console.log(`Server is up on Port ${port}`)
 })
