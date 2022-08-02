@@ -4,7 +4,12 @@ const catchAsync = require('../utils/catchAsync');
 const profile = require('../controllers/profile');
 const { isLoggedIn , isNotLoggedIn,validateUserReg,validateUserLogin, allegedUser, duplicateKeys} = require('../utils/middleware');
 
-router.get('/', (req,res)=>{res.render('home')})                                   
+router.get('/', (req,res)=>{
+    if(!res.locals.currentUser){
+        res.locals.currentUser = null
+    }
+    res.render('home')
+})                                   
 router.get('/login', isLoggedIn, (req,res)=>{res.render('login')})              
 router.get('/register', isLoggedIn, (req,res)=>{res.render('register')});  
 
