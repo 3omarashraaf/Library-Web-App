@@ -8,7 +8,7 @@ router.get('/', (req,res)=>{
     if(!res.locals.currentUser){
         res.locals.currentUser = null
     }
-    res.render('home')
+    res.render('home',{currentUser})
 })                                   
 router.get('/login', isLoggedIn, (req,res)=>{res.render('login')})              
 router.get('/register', isLoggedIn, (req,res)=>{res.render('register')});  
