@@ -1,4 +1,4 @@
-<% if(success != null && success.length) {%>
+<% if(typeof success !== 'undefined' && success.length) {%>
     <div class="col-6 offset-3 my-5 text-center" >
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <%= success %>
@@ -8,7 +8,7 @@
     </div>
     </div>
 <% } %>
-<% if(error != null && error.length) {%>
+<% if(typeof error !== 'undefined' && error.length) {%>
     <div class="col-6 offset-3 my-5 text-center" >
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <%= error %>
