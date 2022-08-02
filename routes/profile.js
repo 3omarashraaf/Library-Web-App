@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const catchAsync = require('../utils/catchAsync');
 const profile = require('../controllers/profile');
-const public = require('../public');
 
 const { isLoggedIn , isNotLoggedIn,validateUserReg,validateUserLogin, allegedUser, duplicateKeys} = require('../utils/middleware');
 
