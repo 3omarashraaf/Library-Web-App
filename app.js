@@ -25,7 +25,7 @@ const lists = require('./routes/lists');
 const profile = require('./routes/profile');
 
 const store = new MongoStore({
-    mongoUrl: 'mongodb://localhost:27017/bookshelf',
+    mongoUrl: dbURL,
     touchAfter: 24*60*60,
     secret
 })

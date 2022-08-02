@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 require('dotenv').config();
 const dbURL = process.env.DB_URL || 'mongodb://localhost:27017/bookshelf'
-module.exports = () => {mongoose.connect( dbURL, {
+module.exports = () => {mongoose.connect(dbURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
