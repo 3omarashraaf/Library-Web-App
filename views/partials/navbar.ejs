@@ -15,7 +15,7 @@
           <li class="nav-item">
             <a class="nav-link active" href="/books">Books</a>
           </li>
-          <% if(currentUser == null)  { %> 
+          <% if(typeof currentUser === 'undefined') { %> 
           <li class="nav-item">
             <a class="nav-link" href="/login">Login</a>
           </li>
