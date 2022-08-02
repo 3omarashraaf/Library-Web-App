@@ -85,7 +85,7 @@ app.use((err, req, res, next) => {
             res.redirect('/register')
         } else if (err.keyPattern.email){
             req.flash('error',`This email is already used`)
-            res.redirect('/register')
+            return res.redirect('/register')
         }
     }
 

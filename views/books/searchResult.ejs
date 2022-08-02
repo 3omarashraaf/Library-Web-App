@@ -55,24 +55,30 @@
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                 <form action="/<%= currentUser.username%>/lists/addBook/1" method="POST">
-                                  <%for(list of currentUser.lists) {  %> 
+                                    <form action="/<%= currentUser.username%>/lists/addToList" method="POST">
+                                    <%for(list of currentUser.lists) {  %> 
                                     <div class="form-check d-flex justify-content-start align-items-center mb-3">
                                         <input class="form-check-input mx-3" type="radio" name="choosenList" value="<%= list.id%>" >
                                         <label class="form-check-label me-3" for="<%=list.id%>"> <%= list.name%></label>
                                     </div>
-                                  <%} %> 
-                                  <div class="form-check d-flex justify-content-start align-items-center mb-3">
+                                    <%} %> 
+                                    <div class="form-check d-flex justify-content-start align-items-center mb-3">
                                         <input class="form-check-input mx-3" type="radio" name="choosenList" value="new" checked>
                                         <label class="form-check-label me-3" for="new"> New</label>
                                         <input type="text" name="list[name]" id="listName" >
                                         <input class="d-none" type="text" name="book[id]" value="<%=book.id%>" >
                                         <input class="d-none" type="text" name="book[isbn]" value="<%=book.isbn%>" >
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button class="btn btn-success">Add</button>
-                                  </div>
-                                 </form>
+                                        <input class="d-none" type="text" name="book[title]" value="<%=book.title%>" >
+                                        <input class="d-none" type="text" name="book[imgUrl]" value="<%=book.imgUrl%>" >
+                                        <input class="d-none" type="text" name="book[description]" value="<%=book.description%>" >
+                                        <input class="d-none" type="text" name="book[author]" value="<%=book.author%>" >
+
+                                    </div>
+    
+                                    <div class="modal-footer">
+                                        <button class="btn btn-success">Add</button>
+                                    </div>
+                                    </form>
                                 </div>
                               </div>
                             </div>

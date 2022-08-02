@@ -52,7 +52,7 @@ module.exports.showProfile = async (req,res) => {
     const user = await User.findOne({username: req.params.username}).populate('lists')
     if(!user){
         req.flash('error',`There's no one with the username "${req.params.username}" `)
-        res.redirect('/')
+        return res.redirect('/')
     }
     res.render('profile/profile',{user})
 

@@ -47,7 +47,12 @@ module.exports.editList = async (req,res) =>{
 
 module.exports.addToList = async (req,res) => {
     let listId = req.body.choosenList
-    const book = await Book.findById(req.body.book.isbn)
+    let book = await Book.findOne({isbn: req.body.book.isbn}) 
+    if(!book){
+        const newBook = new Book(req.body.book);
+        await newBook.save();
+        book = newBook;
+    }
     if(req.body.choosenList === 'new'){
         const name = req.body.list.name
         const user = await User.findById(req.session.user.user_id)

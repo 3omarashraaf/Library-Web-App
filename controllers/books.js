@@ -12,15 +12,6 @@ module.exports.search = async(req,res) => {
     res.render('books/searchResult',{books})
 }
 
-module.exports.addOneBook = async(req,res) => {
-    const id = req.params.id;
-    const bookArray = await fetchBooks(id)
-    delete req.params.id
-    const book = new Book(bookArray.filter(el=>el.is)[0])
-    await book.save();
-    res.redirect(`/books/${book.isbn}`)
-} 
-
 module.exports.newBook = async(req,res) => {
     const book = new Book(req.body.book);
     await book.save();
