@@ -13,10 +13,10 @@ router.post('/login' , isLoggedIn, validateUserLogin,catchAsync(profile.login));
 router.post('/register', isLoggedIn, validateUserReg, duplicateKeys,catchAsync(profile.register));  
 router.get('/logout', isNotLoggedIn, profile.logout);
 
-router.get('/:username',catchAsync(profile.showProfile));                // Render User Profile   R
+router.get('/:username',catchAsync(profile.showProfile));                                  // Render User Profile  
 router.get('/:username/edit',isNotLoggedIn,allegedUser,catchAsync(profile.showEditPage))
-router.post('/:username',isNotLoggedIn,allegedUser,catchAsync(profile.editProfile));   // Edit user profile     U
-router.delete('/:username');                                                           // Delete user profile?  D
+router.post('/:username',isNotLoggedIn,allegedUser,catchAsync(profile.editProfile));       // Edit user profile    
+router.delete('/:username');                                                               // Delete user profile
 
 
 module.exports = router;

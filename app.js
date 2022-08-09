@@ -20,7 +20,6 @@ const ExpressError = require('./utils/ExpressError')
 const books = require('./routes/books');
 const movies = require('./routes/movies');
 const tvshows = require('./routes/tvshows');
-const reviews = require('./routes/reviews');
 const lists = require('./routes/lists');
 const profile = require('./routes/profile');
 
@@ -68,7 +67,6 @@ app.get('/admin',isAdmin,(req,res) => {
 app.use('/books',books)
 app.use('/tvshows',tvshows)
 app.use('/movies',movies)
-app.use('/books/:isbn/reviews',reviews)
 app.use('/',lists)
 app.use('/',profile)
 

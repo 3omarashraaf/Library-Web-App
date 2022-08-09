@@ -1,9 +1,27 @@
 const Review = require('../models/review');
-const {bookSchema,reviewSchema ,userRegSchema, userLoginSchema} = require('../utils/schemas.js');
+const {bookSchema,moiveSchema,tvshowSchema,reviewSchema ,userRegSchema, userLoginSchema} = require('../utils/schemas.js');
 const ExpressError = require('./ExpressError.js')
 
 module.exports.validateBook = (req, res, next) => {
     const { error } = bookSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    } else {
+        next();
+    }
+}
+module.exports.validateMovie = (req, res, next) => {
+    const { error } = movieSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    } else {
+        next();
+    }
+}
+module.exports.validateTvshow = (req, res, next) => {
+    const { error } = tvshowSchema.validate(req.body);
     if (error) {
         const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400)

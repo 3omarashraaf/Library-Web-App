@@ -62,10 +62,10 @@
             <p class="card-subtitle "><b>Number of Seasons:</b> <%= tvshow.numberOfSeasons%></p>      
             <p class="card-text mt-3"><b>Overview:</b> <%=tvshow.overview%></p>
         </div>
-        <!-- <div class="col-md-4 col-12 d-flex flex-column mb-3">
-            <% //if(currentUser) {%> 
+        <div class="col-md-4 col-12 d-flex flex-column mb-3">
+            <% if(currentUser) {%> 
                 <h2>Leave a review</h2>
-                <form action="/tvshows/<%=//tvshow.id%>/reviews" method="POST" class="needs-validation" novalidate>
+                <form action="/tvshows/<%=tvshow.id%>/reviews" method="POST" class="needs-validation" novalidate>
                     <fieldset class="starability-basic">
                         <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked
                             aria-label="No rating." />
@@ -83,24 +83,24 @@
                     <textarea class="form-control" name="review[text]" id="reviewTxt" cols="30" rows="3" required></textarea>
                     <button class="btn btn-success mt-3">Submit</button>
                 </form>
-                <% //} %> 
-                <% //for(review of tvshow.reviews) { %> 
+                <% } %> 
+                <% for(review of tvshow.reviews) { %> 
                     <div class="card mt-4">
                         <div class="card-body">
-                            <h5 class="card-title"> by <a class="text-decoration-none text-muted" href="/<%= //review.user.username %>">@<%= //review.user.username %></a>  </h5>
-                            <p class="starability-result" data-rating="<%=//review.rating%>">
-                                Rated: <%= //review.rating %> stars
+                            <h5 class="card-title"> by <a class="text-decoration-none text-muted" href="<%= review.user.username %>">@<%= review.user.username %></a>  </h5>
+                            <p class="starability-result" data-rating="<%=review.rating%>">
+                                Rated: <%= review.rating %> stars
                             </p>
-                            <p class="card-text"><%=//review.text %></p>
+                            <p class="card-text"><%=review.text %></p>
                             <div class="mt-3">
-                                <% //  if(currentUser) { if(review.user.username === currentUser.username || currentUser.username === 'admin') {%> 
-                                    <form action="/tvshows/<%=//tvshow.id%>/reviews/<%=//review._id%>?_method=DELETE" method="POST" class="d-inline">
+                                <%  if(currentUser) { if(review.user.username === currentUser.username || currentUser.username === 'admin') {%> 
+                                    <form action="/tvshows/<%=tvshow.id%>/reviews/<%=review._id%>?_method=DELETE" method="POST" class="d-inline">
                                         <button class="btn btn-sm btn-danger">Delete</button>
                                     </form>
-                                <% // }} %> 
+                                <% }} %> 
                             </div>
                         </div>
                     </div>
-                <% //} %> 
-            </div> -->
+                <% } %> 
+            </div>
 </div>

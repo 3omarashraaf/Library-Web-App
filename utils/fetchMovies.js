@@ -39,13 +39,13 @@ module.exports.fetchOneMovie = async (id) => {
         title: response.original_title,
         language: response.original_language,
         posterUrl: `https://image.tmdb.org/t/p/w1280/${response.poster_path}`,
-        homepage: response.homepage,
+        homepage: response.homepage || null,
         overview: response.overview,
         releaseDate: response.release_date,
         voteAvg: response.vote_average,
         voteCount: response.vote_count,
         genres: response.genres.map(el=>el.name),
-        trailerUrl: `https://www.youtube.com/watch?v=${video.results[0].key}`
+        trailerUrl: `https://www.youtube.com/watch?v=${video.results[0].key}` || null
     }
     return movie;    
 }
