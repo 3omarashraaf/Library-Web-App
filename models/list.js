@@ -7,9 +7,21 @@ const ListSchema = new Schema({
         type: String,
         required: true,
     },
+    type:{
+        type: String,
+        required: true,
+    },
     books:[{
         type: Schema.Types.ObjectId,
         ref: 'Book'
+    }],
+    movies:[{
+        type: Schema.Types.ObjectId,
+        ref: 'Movie'
+    }],
+    tvshows:[{
+        type: Schema.Types.ObjectId,
+        ref: 'Tvshow'
     }],
     coverUrl:{
         type: String,

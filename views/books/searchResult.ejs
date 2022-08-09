@@ -55,8 +55,8 @@
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="/<%= currentUser.username%>/lists/addToList" method="POST">
-                                    <%for(list of currentUser.lists) {  %> 
+                                    <form action="/<%= currentUser.username%>/lists/books/add" method="POST">
+                                    <%for(list of currentUser.bookLists) {  %> 
                                     <div class="form-check d-flex justify-content-start align-items-center mb-3">
                                         <input class="form-check-input mx-3" type="radio" name="choosenList" value="<%= list.id%>" >
                                         <label class="form-check-label me-3" for="<%=list.id%>"> <%= list.name%></label>

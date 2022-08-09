@@ -17,7 +17,6 @@ const UserSchema = new Schema({
         required: [true, 'Email cannot be blank'], 
         unique: true
     }, 
-    // lists: [{title,[Books]},{title,[Books]}]
     password:{
         type: String,
         required: [true, 'Password cannot be blank'] 
@@ -29,7 +28,15 @@ const UserSchema = new Schema({
         type:String,
         default: 'https://i.pinimg.com/474x/8f/1b/09/8f1b09269d8df868039a5f9db169a772.jpg'
     },
-    lists: [{
+    bookLists: [{
+        type: Schema.Types.ObjectId,
+        ref: 'List'
+    }],
+    movieLists: [{
+        type: Schema.Types.ObjectId,
+        ref: 'List'
+    }],
+    tvshowLists: [{
         type: Schema.Types.ObjectId,
         ref: 'List'
     }]

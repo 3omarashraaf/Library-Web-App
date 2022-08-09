@@ -1,9 +1,5 @@
 const Review = require('../models/review');
 const Book = require('../models/book');
-const review = require('../models/review');
-
-
-
 
 module.exports.addReview = async(req,res)=>{
     const isbn = req.params.isbn

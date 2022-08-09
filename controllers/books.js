@@ -1,6 +1,5 @@
 const fetchBooks = require('../utils/fetchBooks');
 const Book = require('../models/book');
-const User = require('../models/user');
 
 module.exports.showAll = async(req,res) => {
     const books = await Book.find({})

@@ -1,19 +1,37 @@
-const fetchBooks = require('../utils/fetchBooks');
+const {fetchOneMovie} = require('../utils/fetchMovies');
 const Book = require('../models/book')
+const Movie = require('../models/movie')
+const Tvshow = require('../models/tvshow')
 const List = require('../models/list')
 const User = require('../models/user')
 const mongoose = require('mongoose');
+const { fetchOneTvshow } = require('../utils/fetchTvshows');
 
 
 module.exports.newList = async (req,res) =>{
     const {name,coverUrl} = req.body.list
+    const type = req.body.type
     const id = req.session.user.user_id
+    console.log(type)
     const user = await User.findById(id)
-    const list = new List({name,coverUrl,owner: id})
+    const list = new List({type,name,coverUrl,owner: id})
     await list.save()
-    user.lists.push(list)
+    switch(type){
+        case "Books":  user.bookLists.push(list);
+                       req.session.user.bookLists.push({type:'Books',name: list.name,id: list.id})
+                       break;
+        case "Movies":  user.movieLists.push(list)
+                        req.session.user.movieLists.push({type:'Movies',name: list.name,id: list.id})
+                        break;
+
+        case "Tv Shows": user.tvshowLists.push(list)
+                         req.session.user.tvshowLists.push({type:'Tv Shows',name: list.name,id: list.id})
+                         break;
+
+
+    }
+    
     await user.save()
-    req.session.user.lists.push({name: list.name,id: list.id})
     res.redirect(`/${user.username}`)
 }
 module.exports.showList = async (req,res) =>{
@@ -21,7 +39,7 @@ module.exports.showList = async (req,res) =>{
         req.flash('error','Sorry we cannot find this list')
         return res.redirect('/')
     }
-    const list = await List.findById(req.params.id).populate('books')
+    const list = await List.findById(req.params.id).populate('books').populate('movies').populate('tvshows')
     if (!list){
         req.flash('error','Sorry we cannot find this list')
         return res.redirect('/')
@@ -45,7 +63,7 @@ module.exports.editList = async (req,res) =>{
     res.redirect(`/${req.session.user.username}`)
 }
 
-module.exports.addToList = async (req,res) => {
+module.exports.addBook = async (req,res) => {
     let listId = req.body.choosenList
     let book = await Book.findOne({isbn: req.body.book.isbn}) 
     if(!book){
@@ -56,14 +74,14 @@ module.exports.addToList = async (req,res) => {
     if(req.body.choosenList === 'new'){
         const name = req.body.list.name
         const user = await User.findById(req.session.user.user_id)
-        const list = new List({name,owner: user._id})
+        const list = new List({type:"Books",coverUrl:"https://images.unsplash.com/photo-1456324504439-367cee3b3c32?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",name,owner: user._id})
         await list.save()
         listId = list._id
-        user.lists.push(list)
+        user.bookLists.push(list)
         await user.save()
         list.books.push(book)
         await list.save()
-        req.session.user.lists.push({name: list.name,id: list.id})
+        req.session.user.bookLists.push({type: list.type,name: list.name,id: list.id})
     }else{
         const list = await List.findById(listId).populate('books');
         const found = list.books.find(el => el.isbn === book.isbn);
@@ -72,6 +90,72 @@ module.exports.addToList = async (req,res) => {
             return res.redirect(`/${req.session.user.username}/lists/${list._id}`)
         }
         list.books.push(book)
+        await list.save();
+    }
+    res.redirect(`/${req.session.user.username}/lists/${listId}`)
+
+}
+module.exports.addMovie = async (req,res) => {
+    let listId = req.body.choosenList
+    let movie = await Movie.findOne({id: req.body.movie.id}) 
+    if(!movie){
+        const newMovie = await fetchOneMovie(req.body.movie.id)
+        const movieObj = new Movie(newMovie)
+        await movieObj.save();
+        movie = movieObj;
+    }
+    if(req.body.choosenList === 'new'){
+         const name = req.body.list.name
+         const user = await User.findById(req.session.user.user_id)
+         const list = new List({type:"Movies",coverUrl:"https://images.unsplash.com/photo-1456324504439-367cee3b3c32?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",name,owner: user._id})
+         await list.save()
+         listId = list._id
+         user.movieLists.push(list)
+         await user.save()
+         list.movies.push(movie)
+         await list.save()
+        req.session.user.movieLists.push({type: list.type,name: list.name,id: list.id})
+    }else{
+         const list = await List.findById(listId).populate('movies');
+         const found = list.movies.find(el => el.id === movie.id);
+        if(found){
+             req.flash('error',`${movie.title} is already in ${list.name}`)
+             return res.redirect(`/${req.session.user.username}/lists/${list._id}`)
+         }
+         list.movies.push(movie)
+         await list.save();
+    }
+    res.redirect(`/${req.session.user.username}/lists/${listId}`)
+
+}
+module.exports.addTvshow = async (req,res) => {
+    let listId = req.body.choosenList
+    let tvshow = await Tvshow.findOne({id: req.body.tvshow.id}) 
+    if(!tvshow){
+        const newTvshow = await fetchOneTvshow(req.body.tvshow.id)
+        const tvshowObj = new Tvshow(newTvshow)
+        await tvshowObj.save();
+        tvshow = tvshowObj;
+    }
+    if(req.body.choosenList === 'new'){
+        const name = req.body.list.name
+        const user = await User.findById(req.session.user.user_id)
+        const list = new List({type:"Tv Shows",coverUrl:"https://images.unsplash.com/photo-1456324504439-367cee3b3c32?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",name,owner: user._id})
+        await list.save()
+        listId = list._id
+        user.tvshowLists.push(list)
+        await user.save()
+        list.tvshows.push(tvshow)
+        await list.save()
+        req.session.user.tvshowLists.push({type: list.type,name: list.name,id: list.id})
+    }else{
+        const list = await List.findById(listId).populate('tvshows');
+        const found = list.tvshows.find(el => el.id === tvshow.id);
+        if(found){
+            req.flash('error',`${tvshow.title} is already in ${list.name}`)
+            return res.redirect(`/${req.session.user.username}/lists/${list._id}`)
+        }
+        list.tvshows.push(tvshow)
         await list.save();
     }
     res.redirect(`/${req.session.user.username}/lists/${listId}`)

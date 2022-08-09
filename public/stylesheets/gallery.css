@@ -1,3 +1,4 @@
+
 .modal-img{
   height: 40vh;
   object-fit:contain;
@@ -55,6 +56,11 @@
 .bb{
   margin: 1rem;
 }
+
+
+
+
+
 @media (max-width: 767px) { 
   .book{
    display: flex!important;

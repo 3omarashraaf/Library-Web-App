@@ -1,0 +1,31 @@
+<% layout('/layouts/boilerplate') %>
+<% if(currentUser){ %> 
+<div class="d-flex">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <div class="row">
+            <form class="input-group needs-validation" action="/movies/TMDB" method="GET" novalidate>
+                <input type="text" class="form-control rounded" name="searchKey" id="searchKey" placeholder="Search" required>
+                <button type= "submit" class="btn btn-outline-primary">search</button>
+            </form>
+        </div>
+    </div>
+</div>
+<% } %> 
+<div class="row align-items-center justify-content-start mt-3">
+    <% for(movie of movies) {%> 
+    <div class="col-12 col-md-6 col-lg-4 col-xl-3 book">
+        <div class="card mb-4  "style="max-width: 22rem;">
+            <img src="<%=movie.posterUrl%>" alt="<%=movie.title%>" class="card-img-top">
+            <div class="card-body">
+                    <h5 class="card-title text-truncate"><%=movie.title%></h5>
+                    <h6 class="card-subtitle">by <%=movie.releaseDate%></h6>
+                    <div class="text-truncate-container">
+                        <p class="card-text mt-2  text-muted"><%= movie.overview%></p>
+                    </div>
+                    <a href="/movies/<%=movie.id%>" class="btn btn-primary mt-2">View details</a>
+            </div>
+        </div>
+    </div>        
+    <% } %>     
+</div>
+

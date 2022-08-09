@@ -1,17 +1,18 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
-const List = require('../models/list');
 
 module.exports.login = async (req,res)=>{             // Submit login form
     const { username, password} = req.body.user
-    const user = await User.findOne({username}).populate('lists')
+    const user = await User.findOne({username}).populate('bookLists').populate('movieLists').populate('tvshowLists')
      if (user){
         const validUser = await bcrypt.compare(password, user.password)
         if (validUser){
             req.session.user = {
                 username: user.username,
                 user_id : user._id,
-                lists: user.lists.map(el=>  ({name: el.name,id:el._id}))
+                bookLists: user.bookLists.map(el=>  ({type: el.type,name: el.name,id:el._id})),
+                movieLists: user.movieLists.map(el=>  ({type: el.type,name: el.name,id:el._id})),
+                tvshowLists: user.tvshowLists.map(el=>  ({type: el.type,name: el.name,id:el._id}))
             }
             const redirectUrl = req.session.returnTo || '/'
             delete req.session.returnTo 
@@ -19,11 +20,11 @@ module.exports.login = async (req,res)=>{             // Submit login form
 
         } else{
             req.flash('error','Incorrect username  or password')
-            res.redirect('/login')
+            return res.redirect('/login')
         }
     }else{
             req.flash('error','Incorrect username  or password')
-            res.redirect('/login')
+            return res.redirect('/login')
         }
 }
 
@@ -37,19 +38,17 @@ module.exports.register = async (req,res)=>{          // Submit Register form  C
         password: hash
     })
     await user.save()
-    const list = new List({name:'Fav',owner: user._id})
-    user.lists.push(list)
-    await user.save()
-    await list.save()
     req.session.user = {
         username: user.username,
         user_id : user._id,
-        lists: user.lists.map(el=>  ({name: el.name,id:el._id}))
+        bookLists: user.bookLists.map(el=>  ({type: el.type,name: el.name,id:el._id})),
+        movieLists: user.movieLists.map(el=>  ({type: el.type,name: el.name,id:el._id})),
+        tvshowLists: user.tvshowLists.map(el=>  ({type: el.type,name: el.name,id:el._id}))
     }
     res.redirect('/')
 }
 module.exports.showProfile = async (req,res) => {
-    const user = await User.findOne({username: req.params.username}).populate('lists')
+    const user = await User.findOne({username: req.params.username}).populate('bookLists').populate('movieLists').populate('tvshowLists')
     if(!user){
         req.flash('error',`There's no one with the username "${req.params.username}" `)
         return res.redirect('/')

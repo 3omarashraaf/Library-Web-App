@@ -1,19 +1,48 @@
 <% layout('/layouts/boilerplate') %>
 <div class="row">
-    <h1 class="text-center">New List</h1>
-    <div class="col-6 offset-3">
+    <div class="col-4 offset-4 card bg-light">
+        <h1 class="card-header border-bottom text-center">New List</h1>
+    <div class=" container card-body">
         <form action="/<%= currentUser.username%>/lists" method="POST">
-            <div class="mb-3">
-                <label class="form-label" for="title">name</label>
-                <input class="form-control" type="text" id="title" name="list[name]">
+            <div class="row mb-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text rounded-0" >Name</span>
+                    </div>
+                    <input type="text" class="form-control" name="list[name]" id="title">
+                  </div>
             </div>
-            <div class="mb-3">
-                <label class="form-label" for="author">cover URL</label>
-                <input class="form-control" type="text" id="author" name="list[coverUrl]" >
+            <div class="row mb-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text rounded-0" >Cover URL</span>
+                    </div>
+                    <input type="text" class="form-control" name="list[coverUrl]" id="coverUrl">
+                  </div>
             </div>
-            <div class="mb-3">
+            <div class=" row mb-3">
+                <div class="col-1">
+                    <label class="form-label" for="type">Type</label>
+                </div>
+                <div class="col-11">
+                    <div class="form-check d-flex justify-content-start align-items-center ">
+                        <input class="form-check-input mx-2" type="radio" name="type" value="Books" checked>
+                        <label class="form-check-label me-3" for="0"> Books</label>
+                    </div>  
+                    <div class="form-check d-flex justify-content-start align-items-center ">
+                        <input class="form-check-input mx-2" type="radio" name="type" value="Movies" >
+                        <label class="form-check-label me-3" for="1"> Movies</label>
+                    </div>  
+                    <div class="form-check d-flex justify-content-start align-items-center mb-3">
+                        <input class="form-check-input mx-2" type="radio" name="type" value="Tv Shows" >
+                        <label class="form-check-label me-3" for="2"> Tv Shows</label>
+                    </div>  
+                </div>
+            </div>
+            <div class="row mb-3">
                 <button class="btn btn-success">Create</button>
             </div>
         </form>
+    </div>
     </div>
 </div>

@@ -5,7 +5,6 @@ const path = require('path')
 const session = require('express-session')
 const engine = require('ejs-mate')
 const flash = require('connect-flash');
-const router = express.Router();
 const methodOverride = require('method-override');
 const MongoStore = require('connect-mongo');
 
@@ -13,13 +12,14 @@ const dbURL = process.env.DB_URL || 'mongodb://localhost:27017/bookshelf'
 const secret = process.env.SECRET || 'thisshouldbeabettersecret'
 const port = process.env.PORT || 3000
 //Require utils
-const { isLoggedIn , isNotLoggedIn, isAdmin} = require('./utils/middleware');
+const {isAdmin} = require('./utils/middleware');
 const mongoConnect = require('./utils/mongoConnect')
-const catchAsync = require('./utils/catchAsync')
 const ExpressError = require('./utils/ExpressError')
 
 //Require Routes
 const books = require('./routes/books');
+const movies = require('./routes/movies');
+const tvshows = require('./routes/tvshows');
 const reviews = require('./routes/reviews');
 const lists = require('./routes/lists');
 const profile = require('./routes/profile');
@@ -66,6 +66,8 @@ app.get('/admin',isAdmin,(req,res) => {
     res.render('admin')
 })
 app.use('/books',books)
+app.use('/tvshows',tvshows)
+app.use('/movies',movies)
 app.use('/books/:isbn/reviews',reviews)
 app.use('/',lists)
 app.use('/',profile)

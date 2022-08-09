@@ -1,0 +1,97 @@
+<% layout('/layouts/boilerplate') %>
+<div class="d-flex">
+    <div class="cover-container d-flex w-100 h-100 mx-auto p-3 flex-column">
+        <div class="row">
+            <form class="input-group needs-validation" action="/movies/TMDB" method="GET" novalidate>
+                <input type="search" class="form-control rounded" name="searchKey" placeholder="Search" aria-label="q" aria-describedby="search-addon" id="q" required/>
+                <button class="btn btn-outline-primary">search</button>
+            </form>
+        </div>
+    </div>
+</div> 
+  
+
+<div class="row align-items-center justify-content-start mt-3">
+    <% for(movie of movies) { %> 
+    <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+        <div class="card mb-4"style="vh-30 max-width: 22rem;">
+            <img src="https://image.tmdb.org/t/p/w1280/<%=movie.poster%>" alt="<%=movie.title%>" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title text-truncate"><%=movie.title%></h5>
+                <h6 class="card-subtitle">Release Date <%=movie.releaseDate%></h6>
+                <div class="text-truncate-container">
+                    <p class="card-text mt-2  text-muted"><%= movie.overview%></p>
+                </div>
+                <div class="mt-2">
+                        <!-- Button trigger modal -->
+                        <div class="modal fade" id="movieModal<%= movie.id%>" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"><%=  movie.title%></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="d-flex flex-column align-items-center justify-content-center">
+                                        <img src="https://image.tmdb.org/t/p/w1280/<%=  movie.poster %> " alt="" class="img-thumbnail modal-img">
+                                        <div class="d-flex justify-content-center align-items-center mb-1" style=" max-width: 20px">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" style=" max-width: 20px" alt="" class="star me-2">  
+                                            <h6 class="card-subtitle fs-6 text-muted mt-1"> <%= movie.voteAvg %>(<%= movie.voteCount %>)</h6>
+                                        </div>
+                                        <h6 class="text-muted "> ID: <%= movie.id%></h6>
+                                        
+                                    </div>
+                                    <h4>Release Date: <%= movie.releaseDate%></h4>
+                                    <p>
+                                        <span class="fw-semibold">Overview:</span> <%= movie.overview%>
+                                    </p>    
+                                </div>
+                                <div class="modal-footer">
+                                  <button class="btn btn-primary" data-bs-target="#movieModal2<%= movie.id%>" data-bs-toggle="modal">Add to List</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal fade" id="movieModal2<%= movie.id%>" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalToggleLabel2">Choose a list</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/<%= currentUser.username%>/lists/movies/add" method="POST">
+                                    <%for(list of currentUser.movieLists) {  %> 
+                                    <div class="form-check d-flex justify-content-start align-items-center mb-3">
+                                        <input class="form-check-input mx-3" type="radio" name="choosenList" value="<%= list.id%>" >
+                                        <label class="form-check-label me-3" for="<%=list.id%>"> <%= list.name%></label>
+                                    </div>
+                                    <%} %> 
+                                    <div class="form-check d-flex justify-content-start align-items-center mb-3">
+                                        <input class="form-check-input mx-3" type="radio" name="choosenList" value="new" checked>
+                                        <label class="form-check-label me-3" for="new"> New</label>
+                                        <input type="text" name="list[name]" id="listName" >
+                                        <input class="d-none" type="text" name="movie[id]" value="<%=movie.id%>" >
+                                        <input class="d-none" type="text" name="movie[title]" value="<%=movie.title%>" >
+                                        <input class="d-none" type="text" name="movie[poster]" value="https://image.tmdb.org/t/p/w1280/<%=movie.poster%>" >
+                                        <input class="d-none" type="text" name="movie[overview]" value="<%=movie.overview%>" >
+                                        <input class="d-none" type="text" name="movie[releaseDate]" value="<%=movie.releaseDate%>" >
+
+                                    </div>
+    
+                                    <div class="modal-footer">
+                                        <button class="btn btn-success">Add</button>
+                                    </div>
+                                    </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <a class="btn btn-primary" data-bs-toggle="modal" href="#movieModal<%=movie.id%>" role="button">View Details</a>
+                          
+                </div>
+            </div>
+        </div>
+    </div>        
+    <% } %>     
+</div>
