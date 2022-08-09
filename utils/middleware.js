@@ -70,8 +70,7 @@ module.exports.duplicateKeys = (err, req, res, next) => {
     next();
 }
 module.exports.allegedReviewOwner = async (req,res,next)=>{
-    const review = await Review.findById(req.params.id).populate('user')
-    console.log(review,req.params)
+    const review = await Review.findById(req.params.reviewID).populate('user')
     if(review.user.username !== req.session.user.username){
         req.flash('error','You are not allowed to do do that')
         return res.redirect(`/`)

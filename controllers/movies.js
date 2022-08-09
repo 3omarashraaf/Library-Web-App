@@ -33,8 +33,8 @@ module.exports.addReview = async(req,res)=>{
     res.redirect(`/movies/${id}`)
 }
 module.exports.deleteReview = async(req,res)=>{
-    const {id, reviwID} = req.params
-    await Movie.findOneAndUpdate({id},{$pull: {reviews: reviwID}});
-    await Review.findByIdAndDelete(reviwID)
+    const {id, reviewID} = req.params
+    await Movie.findOneAndUpdate({id},{$pull: {reviews: reviewID}});
+    await Review.findByIdAndDelete(reviewID)
     res.redirect(`/movies/${id}`)
 }

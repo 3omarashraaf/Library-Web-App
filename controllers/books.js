@@ -60,8 +60,8 @@ module.exports.addReview = async(req,res)=>{
     res.redirect(`/books/${isbn}`)
 }
 module.exports.deleteReview = async(req,res)=>{
-    const {isbn, id} = req.params
-    await Book.findOneAndUpdate({isbn},{$pull: {reviews: id}});
-    await Review.findByIdAndDelete(id)
+    const {isbn, reviewID} = req.params
+    await Book.findOneAndUpdate({isbn},{$pull: {reviews: reviewID}});
+    await Review.findByIdAndDelete(reviewID)
     res.redirect(`/books/${isbn}`)
 }
