@@ -39,6 +39,31 @@ const UserSchema = new Schema({
     tvshowLists: [{
         type: Schema.Types.ObjectId,
         ref: 'List'
+    }],
+    followers: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        unique: true
+    }],
+    following: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        unique: true
+    }],
+    likedLists: [{
+        type: Schema.Types.ObjectId,
+        ref: 'List'
+    }],
+    logs: [{
+       type: {type: String, required: true},
+       list: {
+            type: Schema.Types.ObjectId,
+            ref: 'List'},
+       thing: {
+            type: Schema.Types.ObjectId,
+            ref: 'Movie' || 'Tvshow' || 'Book'||'Review'},
+        date: {type: Date}
+       
     }]
 })
 UserSchema.post('findOneAndDelete',async(doc)=>{

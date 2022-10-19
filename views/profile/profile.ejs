@@ -1,18 +1,15 @@
 <% layout('/layouts/boilerplate') %>
 <section class="h-100 gradient-custom-2">
-  <div class="container mb-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
+  <div class="container mb-5 ">
+    <div class="row d-flex justify-content-center align-items-center ">
       <div class="col col-lg-9 col-xl-10">
         <div class="card" >
-        <div class="card-header ">
+        <div class="card-header">
           <div class="row text-white pfp">
             <div class="col-sm-3 ms-5 d-flex flex-column justify-content-center align-items-center">
-              <img src="https://i.pinimg.com/474x/8f/1b/09/8f1b09269d8df868039a5f9db169a772.jpg" 
-                alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2" >
-                <% if(currentUser && user.username === currentUser.username) { %> 
-              <a class="btn btn-outline-light editBtn" data-mdb-ripple-color="dark" href="/<%= user.username%>/edit" >
-                Edit profile
-              </a>
+              <img src= <%= user.pfpUrl%> alt="Generic placeholder image" class="pfp2 img-thumbnail mt-4 mb-2" >
+              <% if(currentUser && user.username === currentUser.username) { %> 
+              <a class="btn btn-outline-light editBtn" data-mdb-ripple-color="dark" href="/<%= user.username%>/edit" >  Edit profile </a>
               <% } %> 
             </div>
             <div class="col-sm-3 userDet">
@@ -31,9 +28,28 @@
               </div>
             </div>
             <div class="d-flex justify-content-end text-center py-1 userCounters">
+              <% if(currentUser && user.username !== currentUser.username) {%> 
+                    <% if(currentUser.following.includes(user._id.toString())) { %>
+                         <form action="/<%= user.username%>/unfollow" method="GET" class="mx-2 mt-2">
+                              <button class="btn btn-outline-danger">Unfollow</button>
+                         </form>
+                    <% }else{ %>
+                      <form action="/<%= user.username%>/follow" method="GET" class="mx-2 mt-2">
+                          <button class="btn btn-outline-success">Follow</button>
+                      </form>
+                    <% } %>   
+              <% } %> 
               <div>
                 <p class="mb-1 h5"><%= user.bookLists.length+user.movieLists.length+user.tvshowLists.length%></p>
                 <p class="small text-muted mb-0">Lists</p>
+              </div>
+              <div class=" mx-3">
+                <p class="mb-1 h5"><%= user.followers.length%></p>
+                <p class="small text-muted mb-0">Followers</p>
+              </div>
+              <div>
+                <p class="mb-1 h5"><%= user.following.length%></p>
+                <p class="small text-muted mb-0">Following</p>
               </div>
                
             </div>
@@ -57,6 +73,7 @@
               <button class="btn btn-dark tabButton" onclick="showPanel(0)">Books</button>
             <button class="btn btn-outline-dark tabButton" onclick="showPanel(1)">Movies</button>
             <button class="btn btn-outline-dark tabButton" onclick="showPanel(2)">Tv Shows</button>
+            <button class="btn btn-outline-dark tabButton" onclick="showPanel(3)">Liked Lists</button>
             </div>
           </div>
           <div class="tabContainer">
@@ -65,7 +82,8 @@
               <div class="row justify-content-center" >
                 <div class="row align-items-center justify-content-start mt-3">
                   <% for(list of user.bookLists) {%> 
-                  <div class="col-12 col-md-6 col-lg-6 col-xl-4">
+                    <% if(list.privacy === 'Public' || user.username === currentUser.username) {%>
+                       <div class="col-12 col-md-6 col-lg-6 col-xl-4">
                       <div class="card mb-4 "style="max-width: 22rem;">
                         <div class="list">
                           <img src="<%= list.coverUrl%>" alt="..." class="card-img-top">
@@ -80,12 +98,14 @@
                                   <h5><%=list.name%></h5>
                                   <h6>by <%if(currentUser && currentUser.username === user.username){%>me<% }else{ %><%= user.username%><%}%></h6>
                                 </div>
-                                <div class="col-3 ms-auto"> &#10084; 120</div>
+                                <div class="col-3 ms-auto"> &#10084; <%=list.likes.length%></div>
                               </div>
                             </div>
                           </a>
                       </div>
                   </div>        
+                      <% } %> 
+                 
                   <% } %> 
                   <% if(currentUser && currentUser.username === user.username) {%>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-4">
@@ -115,7 +135,8 @@
               <div class="row justify-content-center" >
                 <div class="row align-items-center justify-content-start mt-3">
                   <% for(list of user.movieLists) {%> 
-                    <div class="col-12 col-md-6 col-lg-6 col-xl-4">
+                    <% if(list.privacy === 'Public' || user.username === currentUser.username) {%>
+                      <div class="col-12 col-md-6 col-lg-6 col-xl-4">
                         <div class="card mb-4 "style="max-width: 22rem;">
                           <div class="list">
                             <img src="<%= list.coverUrl%>" alt="..." class="card-img-top">
@@ -130,12 +151,14 @@
                                     <h5><%=list.name%></h5>
                                     <h6>by <%if(currentUser && currentUser.username === user.username){%>me<% }else{ %><%= user.username%><%}%></h6>
                                   </div>
-                                  <div class="col-3 ms-auto"> &#10084; 120</div>
+                                  <div class="col-3 ms-auto"> &#10084; <%= list.likes.length %></div>
                                 </div>
                               </div>
                             </a>
                         </div>
-                    </div>        
+                    </div>
+                      <% } %> 
+                            
                     <% } %> 
                   <% if(currentUser && currentUser.username === user.username) {%>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-4">
@@ -166,27 +189,29 @@
               <div class="row justify-content-center" >
                 <div class="row align-items-center justify-content-start mt-3">
                   <% for(list of user.tvshowLists) {%> 
-                    <div class="col-12 col-md-6 col-lg-6 col-xl-4">
-                        <div class="card mb-4 "style="max-width: 22rem;">
-                          <div class="list">
-                            <img src="<%= list.coverUrl%>" alt="..." class="card-img-top">
-                          </div>  
-                            <a class="card-img-overlay d-flex flex-column text-decoration-none text-light " href="/<%= user.username%>/lists/<%= list._id%>">
-                              <div class="">
-                                <p class="card-text"></p>
-                              </div>
-                              <div class="mt-auto">
-                                <div class="row d-flex">
-                                  <div class="col-9">
-                                    <h5><%=list.name%></h5>
-                                    <h6>by <%if(currentUser && currentUser.username === user.username){%>me<% }else{ %><%= user.username%><%}%></h6>
-                                  </div>
-                                  <div class="col-3 ms-auto"> &#10084; 120</div>
+                    <% if(list.privacy === 'Public' || user.username === currentUser.username) {%>
+                      <div class="col-12 col-md-6 col-lg-6 col-xl-4">
+                      <div class="card mb-4 "style="max-width: 22rem;">
+                        <div class="list">
+                          <img src="<%= list.coverUrl%>" alt="..." class="card-img-top">
+                        </div>  
+                          <a class="card-img-overlay d-flex flex-column text-decoration-none text-light " href="/<%= user.username%>/lists/<%= list._id%>">
+                            <div class="">
+                              <p class="card-text"></p>
+                            </div>
+                            <div class="mt-auto">
+                              <div class="row d-flex">
+                                <div class="col-9">
+                                  <h5><%=list.name%></h5>
+                                  <h6>by <%if(currentUser && currentUser.username === user.username){%>me<% }else{ %><%= user.username%><%}%></h6>
                                 </div>
+                                <div class="col-3 ms-auto"> &#10084; <%= list.likes.length %></div>
                               </div>
-                            </a>
-                        </div>
-                    </div>        
+                            </div>
+                          </a>
+                      </div>
+                  </div> 
+                     <% } %> 
                     <% } %> 
                   <% if(currentUser && currentUser.username === user.username) {%>
                     <div class="col-12 col-md-6 col-lg-6 col-xl-4">
@@ -212,6 +237,35 @@
                   <% } %>
               </div>
             </div>
+            <div class="tabPanel" style="display: none;">
+              <div class="row justify-content-center" >
+                <div class="row align-items-center justify-content-start mt-3">
+                  <% for(list of user.likedLists) {%> 
+                    <% if(list.privacy === 'Public' || user.username === currentUser.username) {%>
+                      <div class="col-12 col-md-6 col-lg-6 col-xl-4">
+                      <div class="card mb-4 "style="max-width: 22rem;">
+                        <div class="list">
+                          <img src="<%= list.coverUrl%>" alt="..." class="card-img-top">
+                        </div>  
+                          <a class="card-img-overlay d-flex flex-column text-decoration-none text-light " href="/<%= user.username%>/lists/<%= list._id%>">
+                            <div class="">
+                              <p class="card-text"></p>
+                            </div>
+                            <div class="mt-auto">
+                              <div class="row d-flex">
+                                <div class="col-9">
+                                  <h5><%=list.name%></h5>
+                                  <h6>by</h6>
+                                </div>
+                                <div class="col-3 ms-auto"> &#10084; <%= list.likes.length %> </div>
+                              </div>
+                            </div>
+                          </a>
+                      </div>
+                  </div> 
+                     <% } %> 
+                    <% } %> 
+              </div>
             </div>
           </div>
         </div>

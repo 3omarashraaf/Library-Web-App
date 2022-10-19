@@ -1,8 +1,8 @@
 <% layout('/layouts/boilerplate') %>
 <div class="row">
-    <div class="col-4 offset-4 card bg-light">
+    <div class="col-8 offset-2 col-xl-4 offset-xl-4 card bg-light mb-3">
         <h1 class="card-header border-bottom text-center">New List</h1>
-    <div class=" container card-body">
+    <div class="card-body">
         <form action="/<%= currentUser.username%>/lists" method="POST">
             <div class="row mb-3">
                 <div class="input-group">
@@ -10,33 +10,62 @@
                       <span class="input-group-text rounded-0" >Name</span>
                     </div>
                     <input type="text" class="form-control" name="list[name]" id="title">
-                  </div>
+                </div>
             </div>
             <div class="row mb-3">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text rounded-0" >Cover URL</span>
-                    </div>
-                    <input type="text" class="form-control" name="list[coverUrl]" id="coverUrl">
-                  </div>
-            </div>
+                <label class="form-check-label" for="listCover1"> Cover Photo</label>
+                <div class="form-check col-12 col-xl-3">
+                    <input class="form-check-input" type="radio" name="list[listCover]" id="listCover1" value="https://images.unsplash.com/photo-1456324504439-367cee3b3c32?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80">
+                    <img  class="listCover" src="https://images.unsplash.com/photo-1456324504439-367cee3b3c32?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="">
+                </div>
+                <div class="form-check col-12  col-xl-3 offset-xl-3">
+                    <input class="form-check-input" type="radio" name="list[listCover]"  value="https://images.unsplash.com/photo-1517330283827-2527c57981ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80">
+                    <img  class="listCover" src="https://images.unsplash.com/photo-1517330283827-2527c57981ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80" alt="">
+                </div>
+             </div>
+             <div class="row mb-3">
+                <div class="form-check col-12 col-xl-3">
+                    <input class="form-check-input" type="radio" name="list[listCover]"  value="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1473&q=80">
+                    <img  class="listCover" src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1473&q=80" alt="">
+                </div>
+                <div class="form-check col-12  col-xl-3 offset-xl-3">
+                    <input class="form-check-input" type="radio" name="list[listCover]"  value="https://images.unsplash.com/photo-1585647347384-2593bc35786b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80">
+                    <img  class="listCover" src="https://images.unsplash.com/photo-1585647347384-2593bc35786b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="">
+                </div>
+             </div> 
+            
             <div class=" row mb-3">
                 <div class="col-1">
                     <label class="form-label" for="type">Type</label>
                 </div>
                 <div class="col-11">
                     <div class="form-check d-flex justify-content-start align-items-center ">
-                        <input class="form-check-input mx-2" type="radio" name="type" value="Books" checked>
+                        <input class="form-check-input mx-2" type="radio" name="list[type]" value="Books"  id ="0"checked>
                         <label class="form-check-label me-3" for="0"> Books</label>
                     </div>  
                     <div class="form-check d-flex justify-content-start align-items-center ">
-                        <input class="form-check-input mx-2" type="radio" name="type" value="Movies" >
+                        <input class="form-check-input mx-2" type="radio" name="list[type]" id ="1" value="Movies" >
                         <label class="form-check-label me-3" for="1"> Movies</label>
                     </div>  
                     <div class="form-check d-flex justify-content-start align-items-center mb-3">
-                        <input class="form-check-input mx-2" type="radio" name="type" value="Tv Shows" >
+                        <input class="form-check-input mx-2" type="radio" name="list[type]" id ="2" value="Tv Shows" >
                         <label class="form-check-label me-3" for="2"> Tv Shows</label>
                     </div>  
+                </div>
+            </div>
+            <div class=" row mb-3">
+                <div class="col-1">
+                    <label class="form-label" for="privacy">Privacy</label>
+                </div>
+                <div class="col-11">
+                    <div class="form-check d-flex justify-content-start align-items-center ">
+                        <input class="form-check-input mx-2" type="radio" name="list[privacy]" value="Public"  id ="0"checked>
+                        <label class="form-check-label me-3" for="0"> Public</label>
+                    </div>  
+                    <div class="form-check d-flex justify-content-start align-items-center ">
+                        <input class="form-check-input mx-2" type="radio" name="list[privacy]" id ="1" value="Private" >
+                        <label class="form-check-label me-3" for="1"> Private</label>
+                    </div>   
                 </div>
             </div>
             <div class="row mb-3">

@@ -48,8 +48,14 @@
   border-bottom: 0;
 }
 .pfp{
- position: absolute; z-index:1;
+ 
+  position: absolute; 
+ z-index:1;
 }
+.pfp2{
+  height: 200px;
+  width: 70%;
+ }
 .userDet2{
   display: none;
 }
@@ -58,7 +64,10 @@
 }
 
 
-
+.listCover{
+  height: 90px;
+  width: 160px;
+}
 
 
 @media (max-width: 767px) { 

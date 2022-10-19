@@ -24,12 +24,12 @@
                                 <form action="/<%= currentUser.username%>/lists/tvshows/add" method="POST">
                                 <%for(list of currentUser.tvshowLists) {  %> 
                                 <div class="form-check d-flex justify-content-start align-items-center mb-3">
-                                    <input class="form-check-input mx-3" type="radio" name="choosenList" value="<%= list.id%>" >
+                                    <input class="form-check-input mx-3" type="radio" name="choosenList" id="<%=list.id%>" value="<%= list.id%>" >
                                     <label class="form-check-label me-3" for="<%=list.id%>"> <%= list.name%></label>
                                 </div>
                                 <%} %> 
                                 <div class="form-check d-flex justify-content-start align-items-center mb-3">
-                                    <input class="form-check-input mx-3" type="radio" name="choosenList" value="new" checked>
+                                    <input class="form-check-input mx-3" type="radio" name="choosenList" id="new" value="new" checked>
                                     <label class="form-check-label me-3" for="new"> New</label>
                                     <input type="text" name="list[name]" id="listName" >
                                     <input class="d-none" type="text" name="tvshow[id]" value="<%=tvshow.id%>" >

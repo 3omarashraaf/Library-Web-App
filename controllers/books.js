@@ -1,6 +1,7 @@
 const fetchBooks = require('../utils/fetchBooks');
 const Book = require('../models/book');
 const Review = require('../models/review');
+const User = require('../models/user');
 
 
 module.exports.showAll = async(req,res) => {
@@ -51,12 +52,15 @@ module.exports.deleteBook = async (req, res) => {
 
 module.exports.addReview = async(req,res)=>{
     const isbn = req.params.isbn
+    const user = await User.findById(req.session.user.user_id)
     const book = await Book.findOne({isbn})
     const review = new Review(req.body.review)
-    review.user = req.session.user.user_id
+    review.user = user
     book.reviews.push(review)
+    user.logs.push({type:'Review', thing:review,date:Date.now()})
     await review.save()
     await book.save()
+    await user.save()
     res.redirect(`/books/${isbn}`)
 }
 module.exports.deleteReview = async(req,res)=>{

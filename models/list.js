@@ -11,6 +11,14 @@ const ListSchema = new Schema({
         type: String,
         required: true,
     },
+    privacy:{
+        type: String,
+        required: true,
+    },
+    likes:[{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     books:[{
         type: Schema.Types.ObjectId,
         ref: 'Book'
@@ -24,11 +32,11 @@ const ListSchema = new Schema({
         ref: 'Tvshow'
     }],
     coverUrl:{
-        type: String,
-        default: 'https://images.unsplash.com/photo-1528052332164-5d1c642a77f7?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770'
+        type: String
     },
     owner:{
         type: Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     }
     ,

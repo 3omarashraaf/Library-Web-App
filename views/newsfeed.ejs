@@ -1,0 +1,22 @@
+<% layout('/layouts/boilerplate') %>
+<link rel="stylesheet" href="/stylesheets/posts.css">
+
+  <!-- /.stream-post -->
+  <% for(let log of followingLogs){ %> 
+  <div class="stream-post">
+    <div class="sp-author">
+        <a href="/<%= log.owner%>" class="sp-author-avatar"><img src="<%= log.ownerpfp %> " alt=""></a>
+        <h6 class="sp-author-name"><a href="#"><%= log.owner %></a></h6></div>
+    <div class="sp-content">
+        <div class="sp-info"><%if(log.date){ %> <%=log.date.toLocaleString()%> <%}%> </div>
+        <p class="sp-paragraph mb-0"><% if(log.type === "Create") {%>Created a new list "<a href="/<%= log.owner%>/lists/<%= log.list._id%>"><%= log.list.name %></a>" check it out !<% } %> 
+                                    <% if(log.type === "Add") {%>Added "<%= log.thing.title %>" to his list "<a href="/<%= log.owner%>/lists/<%= log.list._id%>"><%= log.list.name %></a>" check it out !<% } %>
+                                    <% if(log.type === "Change") {%>Made <a href="/<%= log.owner%>/lists/<%= log.list._id%>"><%= log.list.name %></a> public !<% } %>
+                                    <% if(log.type === "Review") {%>Reviewed <a href="/">"title"</a> check it out !<% } %>
+
+                                </p>
+    </div>
+  
+    <!-- /.sp-content -->
+</div>
+<% } %> 

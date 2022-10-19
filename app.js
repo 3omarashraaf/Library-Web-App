@@ -61,9 +61,7 @@ app.use((req,res,next)=>{
     next();
 })
 
-app.get('/admin',isAdmin,(req,res) => {
-    res.render('admin')
-})
+
 app.use('/books',books)
 app.use('/tvshows',tvshows)
 app.use('/movies',movies)

@@ -8,8 +8,8 @@ module.exports.fetchTvshows = async (searchKey) => {
     var tvshows = []
     if(response){
        if (response.total_results>0){ 
-        for (tvshow of response.results) {    
-                const newMovie = {
+        for (let tvshow of response.results) {    
+                const newTvshow = {
                     id: tvshow.id,
                     title: tvshow.name,
                     overview: tvshow.overview,
@@ -18,7 +18,7 @@ module.exports.fetchTvshows = async (searchKey) => {
                     voteCount: tvshow.vote_count,
                     poster: tvshow.poster_path
                 }
-                tvshows.push(newMovie)
+                tvshows.push(newTvshow)
             }
          }
     }

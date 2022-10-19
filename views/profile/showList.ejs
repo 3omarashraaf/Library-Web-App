@@ -1,5 +1,5 @@
 <% layout('/layouts/boilerplate') %>
-<div class="card">
+<div class="card mb-3">
     <div class="card-header">
         <img src="<%= list.coverUrl%>" alt="" class="card-img-top">
     </div>
@@ -7,21 +7,30 @@
         <div class="row ">
             <div class="col-9">
                 <h5 class="card-title"><%= list.name %> </h5>
-                <h6 class="card-subtitle">by <%if(currentUser && currentUser.username === username){%>me<% }else{ %><%= username%><%}%></h6>
+                <h6 class="card-subtitle">by <%if(currentUser && list.owner._id === currentUser.user_id){%>me<% }else{ %><%=list.owner.username%><%}%></h6>
                 <p class="card-text text-muted "><%= list.description %> </p>
                 
             </div>
             <div class="col-3 d-flex flex-column align-items-end">
                 <div>
-                    &#10084; 120
+                    &#10084; <%= list.likes.length%>
                 </div>
                 <div class="mt-2">
-                    <% if(currentUser && currentUser.username === username) { %>
-                    <a href="/<%=username%>/lists/<%=list._id%>/edit" class="btn btn-primary">Edit </a>
-                    <form action="/<%=username%>/lists/<%=list._id%>?_method=DELETE" method="POST" class="d-inline">
-                        <button class="btn btn-danger">Delete</button>
-                    </form>
-                    <% } %> 
+                    <% if (currentUser) {%>
+                        <% if( list.owner._id.toString() === currentUser.user_id.toString()) { %>
+                            <a href="/<%=username%>/lists/<%=list._id%>/edit" class="btn btn-primary">Edit </a>
+                            <form action="/<%=username%>/lists/<%=list._id%>/privacy?_method=PUT" method="POST" class="d-inline">
+                                <button class="btn btn-success">Make <%if(list.privacy === 'Public') { %> Private <% }else{ %> Public <% } %>  </button>
+                            </form>
+                            <form action="/<%=username%>/lists/<%=list._id%>?_method=DELETE" method="POST" class="d-inline">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                            <% }else{ %>
+                                <form action="/<%=username%>/lists/<%=list._id%>/like?_method=PUT" method="POST" class="d-inline">
+                                    <button class="btn btn-danger"><% if (list.likes.includes(currentUser.user_id)){%> unlike<% }else{ %> like <% } %>  </button>
+                                </form>
+                            <% } %> 
+                    <% } %>   
                 </div>
             
             </div>
@@ -43,7 +52,7 @@
                                     <p class="card-text mt-2  text-muted"><%= book.description%></p>
                                 </div>
                                 <a href="/books/<%=book.isbn%>" class="btn btn-primary mt-2">View details</a>
-                                <% if(currentUser && currentUser.username === username) { %>
+                                <% if(currentUser && list.owner._id === currentUser.user_id) { %>
                                 <form action="/<%=username%>/lists/<%=list._id%>/books/<%=book.isbn%>?_method=DELETE" method="POST" class="d-inline">
                                     <button class="btn btn-danger mt-2">Remove</button>
                                 </form>

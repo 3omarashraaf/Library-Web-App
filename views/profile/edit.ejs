@@ -3,7 +3,7 @@
     <div class="card col-md-6 offset-md-3 my-5 col-xl-6 offset-xl-3">
         <div class="card-title text-center fw-semibold mt-3"> <h2>Edit Profile</h2> </div>
         <div class="card-body">
-                <form action="/<%= user.username%>" method="POST" class="needs-validation" novalidate>
+                <form action="/<%= user.username%>" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
                     <div class="row">
                         <div class="col-6">
                             <div class="mb-3">
@@ -31,7 +31,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="conf-password" class="form-label">Confirm Password</label>
-                                <input type="password" class="form-control " id="conf-password" name="" >
+                                <input type="password" class="form-control " id="conf-password" name="user[confPassword]" >
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
@@ -43,9 +43,9 @@
                             <textarea name="user[about]" id="about" cols="30" rows="3" class="form-control"  ><%= user.about%></textarea>
                         </div>
                         <div class="col-12 mb-4">
-                            <label for="pfpUrl" class="form-label">Profile Picture</label>
-                            <input type="text" id="pfpUrl" name="user[pfpUrl]" class="form-control" value="<%= user.pfpUrl%>" >
-                        </div>
+                            <label for="pfp" class="form-label">Profile Picture</label>
+                            <input type="file" name="pfp" id="pfp">                       
+                         </div>
                         <div class="col-12 d-grid gap-2 my-2" >
                             <button  class="btn btn-success  btn-block">Edit</button>
                         </div> 

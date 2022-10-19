@@ -27,8 +27,8 @@ module.exports.validateTvshow = (req, res, next) => {
         throw new ExpressError(msg, 400)
     } else {
         next();
-    }
-}
+    } 
+} 
 module.exports.validateReview = (req, res, next) => {
     const { error } = reviewSchema.validate(req.body);
     if (error) {

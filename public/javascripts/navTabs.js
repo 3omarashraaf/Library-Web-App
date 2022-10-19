@@ -16,8 +16,10 @@ switch (dir){
                   break;
     case "register": dir = "Register"
                   break;          
-    case "": dir = "Home";
+    case "" : dir = "Home";
              break;
+    case "home" : dir = "Home";
+              break;
     default: dir = "My Profile";
              break;                       
 }
@@ -25,8 +27,10 @@ window.onload = ()=> {
     if(activeTabs[0]){
         activeTabs[0].classList.remove("active")
     }
-    if(homeActiveTabs[0]){
-        homeActiveTabs[0].classList.remove("text-white")
+    if(dir === "Home" || dir === "Login" || dir === "Register"){
+        if(homeActiveTabs[0]){
+            homeActiveTabs[0].classList.remove("text-white")
+        }
     }
     for (let navTab of navTabs){
         if (navTab.textContent === dir){
